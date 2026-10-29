@@ -25,4 +25,24 @@ void Game::Initialize() {
 
 }
 
+void Game::Run() {
 
+    while (window.isOpen()) {
+        while (const std::optional event = window.pollEvent()) {
+            if (event->is<sf::Event::Closed>()) {
+                window.close();
+            }
+            else if (const auto* key = event->getIf<sf::Event::KeyPressed>()) {
+                if (key->scancode == sf::Keyboard::Scan::Escape) {
+                    window.close();
+                }
+            }
+        }
+
+        window.clear(sf::Color::Black);
+        if (sprite.has_value()) {
+            window.draw(*sprite);
+        }
+        window.display();
+    }
+}
