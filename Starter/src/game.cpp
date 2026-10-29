@@ -44,9 +44,13 @@ void Game::Run() {
         }
         //Movement with Playstation controller
 
+        const float y = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y);
+        if (std::abs(y) > 20.f) {
+            sprite->move({0, y / 100 * 5});
+        }
         const float x = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
         if (std::abs(x) > 20.f) {
-            sprite->move({x / 100 * 2, 0});
+            sprite->move({x / 100 * 5, 0});
         }
 
 
