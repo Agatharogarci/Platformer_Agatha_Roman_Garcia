@@ -28,6 +28,20 @@ void Game::Initialize() {
 void Game::Run() {
 
     while (window.isOpen()) {
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Up)) {
+            sprite->move({0,-1});
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Down)) {
+            sprite->move({0,1});
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Left)) {
+            sprite->move({-1,0});
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Right)) {
+            sprite->move({1,0});
+        }
+
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 window.close();

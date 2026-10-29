@@ -12,6 +12,7 @@ class Game {
     std::optional<sf::Sprite> sprite;
     sf::Texture texture;
 
+
     public:
     void Initialize();
     void Run();
