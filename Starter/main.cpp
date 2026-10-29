@@ -6,6 +6,7 @@
 int main()
 {
 Game game;
+
     game.Initialize();
     game.Run();
     std::println("End of the game");
