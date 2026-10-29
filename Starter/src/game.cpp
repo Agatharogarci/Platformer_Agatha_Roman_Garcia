@@ -29,6 +29,7 @@ void Game::Run() {
 
     while (window.isOpen()) {
 
+        //Movement with Keyboard up, down, left, right
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Up)) {
             sprite->move({0,-1});
         }
@@ -41,6 +42,15 @@ void Game::Run() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Right)) {
             sprite->move({1,0});
         }
+        //Movement with Playstation controller
+        if (!sf::Joystick::isConnected(0)) {
+            return;
+        }
+        const float x = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
+        if (std::abs(x) > 20.f) {
+            sprite->move({x / 100, 0});
+        }
+
 
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
