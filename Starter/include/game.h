@@ -4,6 +4,7 @@
 
 #ifndef PLATFORMER_AGATHA_ROMAN_GARCIA_GAME_H
 #define PLATFORMER_AGATHA_ROMAN_GARCIA_GAME_H
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <optional>
 

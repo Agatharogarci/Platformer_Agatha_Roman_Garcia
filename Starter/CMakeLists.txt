@@ -1,5 +1,7 @@
 add_executable(Starter main.cpp
         include/game.h
-        src/game.cpp)
+        src/game.cpp
+        include/player.h
+        src/player.cpp)
 
-target_link_libraries(Starter PUBLIC SFML::Graphics)
+target_link_libraries(Starter PUBLIC SFML::Graphics SFML::Audio)

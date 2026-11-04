@@ -20,10 +20,8 @@ void Game::Initialize() {
         sprite->setPosition({800, 600});
         sprite->setOrigin({800, 600});
     }
-
-
-
 }
+
 
 void Game::Run() {
 
@@ -31,16 +29,17 @@ void Game::Run() {
 
         //Movement with Keyboard up, down, left, right
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Up)) {
-            sprite->move({0,-1});
+            sprite->move({0,-5});
+
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Down)) {
-            sprite->move({0,1});
+            sprite->move({0,5});
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Left)) {
-            sprite->move({-1,0});
+            sprite->move({-5,0});
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Right)) {
-            sprite->move({1,0});
+            sprite->move({5,0});
         }
         //Movement with Playstation controller
 
