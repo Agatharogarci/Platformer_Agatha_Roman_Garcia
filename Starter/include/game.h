@@ -7,11 +7,14 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <optional>
+#include "player.h"
 
 class Game {
     sf::RenderWindow window;
     std::optional<sf::Sprite> sprite;
     sf::Texture texture;
+
+    Player player;
 
 
     public:

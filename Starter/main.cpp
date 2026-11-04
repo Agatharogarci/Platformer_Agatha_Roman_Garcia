@@ -6,8 +6,14 @@
 int main()
 {
 Game game;
+Player player;
 
+
+    player.Play();
     game.Initialize();
     game.Run();
+
     std::println("End of the game");
+
+    return EXIT_SUCCESS;
 }

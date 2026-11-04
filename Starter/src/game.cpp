@@ -6,6 +6,9 @@
 #include "../include/game.h"
 
 void Game::Initialize() {
+
+    player.Play();
+
     //Set the window and frame rate ---------------------------------------------------
     window.create(sf::VideoMode({800, 600}),"Platformer");
     window.setFramerateLimit(60);
@@ -29,9 +32,9 @@ void Game::Run() {
             }
         }
 
-
+        player.Update();
         window.clear(sf::Color::Black);
-
+        player.Draw(window);
         window.display();
     }
 }
