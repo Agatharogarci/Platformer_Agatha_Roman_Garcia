@@ -35,7 +35,7 @@ Player::Player()
 
 
 void Player::Update(float dt) {
-    std::println("dt : {}",dt);
+
 
     //Movement logic ----------------------------------------------------
 
@@ -99,6 +99,7 @@ if (!sf::Joystick::isConnected(0)) {
     else {
         if (sound->getStatus() == sf::SoundSource::Status::Playing) {
             sound->stop();
+            character->setTexture(purple_front, true);
         }
     }
 
