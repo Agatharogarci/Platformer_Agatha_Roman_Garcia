@@ -7,10 +7,10 @@
 
 void Game::Initialize() {
 
-    player.Play();
+    
 
     //Set the window and frame rate ---------------------------------------------------
-    window.create(sf::VideoMode({800, 600}),"Platformer");
+    window.create(sf::VideoMode({960, 540}),"Platformer");
     window.setFramerateLimit(60);
 }
 

@@ -9,7 +9,7 @@ Game game;
 Player player;
 
 
-    player.Play();
+    player.Update();
     game.Initialize();
     game.Run();
 

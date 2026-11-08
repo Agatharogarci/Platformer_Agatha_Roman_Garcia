@@ -9,7 +9,10 @@
 
 class Player {
     std::optional<sf::Sprite> character;
-    sf::Texture texture;
+    sf::Texture purple_front;
+    sf::Texture purple_jump;
+    sf::Texture purple_walk_a;
+    sf::Texture purple_walk_b;
 
     bool moving = false;
 
@@ -19,7 +22,7 @@ class Player {
     sf::Window window;
 public:
 
-    void Play();
+    Player();
     void Update();
     void Draw(sf::RenderWindow&);
 };

@@ -4,24 +4,30 @@
 #include <print>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include "C:\Users\Utilisateur\Projets_SAE_C++\sfml\Starter\include\player.h"
+#include "C:\Users\Utilisateur\Projets_SAE_C++\Platformer_Agatha_Roman_Garcia\Starter\include\player.h"
 
 
+Player::Player()
+:
+    purple_front("../../Starter/ressources/character_purple_front.png"),
+    purple_jump("../../Starter/ressources/character_purple_jump.png"),
+    purple_walk_a("../../Starter/ressources/character_purple_walk_a.png"),
+    purple_walk_b("../../Starter/ressources/character_purple_walk_b.png")
 
-void Player::Play() {
+{
 
     //SPRITE and SOUND --------------------------------------------------------------------
 
-    texture.loadFromFile("../../Starter/ressources/character_purple_front.png");
+
     buffer.loadFromFile("../../Starter/sounds/footstep_grass_000.ogg");
 
     sound = sf::Sound(buffer);
 
-    character = sf::Sprite(texture);
+    character.emplace(purple_front);
     if (character) {
-        character->setTexture(texture);
+
+        character->setOrigin({purple_front.getSize().x / 2.f, purple_front.getSize().y / 2.f});
         character->setPosition({200, 200});
-        character->setOrigin({texture.getSize().x / 2.f, texture.getSize().y / 2.f});
     }
 
 }
@@ -37,6 +43,9 @@ void Player::Update() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Left)) {
         moving = true;
         character->move({-2, 0});
+        character->setTexture(purple_walk_a, true);
+        character->setTexture(purple_walk_b, true);
+        character->setScale({-1, 1});
     }
 
 
@@ -46,16 +55,16 @@ void Player::Update() {
     }
 
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Up)) {
-        moving = true;
-        character->move({0, -2});
-    }
-
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Down)) {
-        moving = true;
-        character->move({0, 2});
-    }
+    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Up)) {
+    //     moving = true;
+    //     character->move({0, -2});
+    // }
+    //
+    //
+    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Down)) {
+    //     moving = true;
+    //     character->move({0, 2});
+    // }
 
     //Movement logic with controller -------------------------------------------------------
 
@@ -73,6 +82,7 @@ void Player::Update() {
 
     if (moving) {
         if (sound->getStatus() != sf::SoundSource::Status::Playing) {
+            sound->setPitch(2.5f);
             sound->play();
         }
     }
