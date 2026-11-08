@@ -45,9 +45,10 @@ void Player::Update(float dt) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Left)) {
         moving = true;
         character->move({-Speed * dt, 0.f});
-        // character->setTexture(purple_walk_a, true);
-        //
-        // character->setTexture(purple_walk_b, true);
+        if (dt ) {
+            character->setTexture(purple_walk_a, true);
+        }
+        character->setTexture(purple_walk_b, true);
         character->setScale({-1, 1});
     }
 

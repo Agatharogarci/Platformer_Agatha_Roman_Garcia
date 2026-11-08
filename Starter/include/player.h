@@ -16,6 +16,10 @@ class Player {
 
     bool moving = false;
 
+    float animation_timer = 0.0f;           // Temps accumulé
+    const float frame_duration = 0.15f;     // Vitesse de l'animation : change d'image tous les 0.15 s
+    bool current_walk_frame = false;
+
     sf::SoundBuffer buffer;
     std::optional<sf::Sound> sound;
 

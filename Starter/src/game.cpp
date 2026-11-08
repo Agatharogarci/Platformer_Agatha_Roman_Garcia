@@ -26,8 +26,8 @@ void Game::Run() {
 
         float dt = clock.restart().asSeconds();
 
-        if (dt > 0.25f) {
-            dt = 0.25f;
+        if (dt > 0.2f) {
+            dt = 0.2f;
         }
 
 
