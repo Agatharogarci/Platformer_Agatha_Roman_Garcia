@@ -4,7 +4,7 @@
 #include <print>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include "C:\Users\Utilisateur\Projets_SAE_C++\Platformer_Agatha_Roman_Garcia\Starter\include\player.h"
+#include "..\..\Starter\include\player.h"
 
 
 Player::Player()
@@ -34,37 +34,29 @@ Player::Player()
 
 
 
-void Player::Update() {
+void Player::Update(float dt) {
+    std::println("dt : {}",dt);
 
     //Movement logic ----------------------------------------------------
 
     moving = false;
+    float Speed = 200.f;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Left)) {
         moving = true;
-        character->move({-2, 0});
-        character->setTexture(purple_walk_a, true);
-        character->setTexture(purple_walk_b, true);
+        character->move({-Speed * dt, 0.f});
+        // character->setTexture(purple_walk_a, true);
+        //
+        // character->setTexture(purple_walk_b, true);
         character->setScale({-1, 1});
     }
 
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Right)) {
         moving = true;
-        character->move({2, 0});
+        character->move({Speed * dt, 0});
     }
 
-
-    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Up)) {
-    //     moving = true;
-    //     character->move({0, -2});
-    // }
-    //
-    //
-    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Down)) {
-    //     moving = true;
-    //     character->move({0, 2});
-    // }
 
     //Movement logic with controller -------------------------------------------------------
 
@@ -80,17 +72,17 @@ void Player::Update() {
 
     //Sound logic-----------------------------------------------------------------
 
-    if (moving) {
-        if (sound->getStatus() != sf::SoundSource::Status::Playing) {
-            sound->setPitch(2.5f);
-            sound->play();
-        }
-    }
-    else {
-        if (sound->getStatus() == sf::SoundSource::Status::Playing) {
-            sound->stop();
-        }
-    }
+    // if (moving) {
+    //     if (sound->getStatus() != sf::SoundSource::Status::Playing) {
+    //         sound->setPitch(0.90f);
+    //         sound->play();
+    //     }
+    // }
+    // else {
+    //     if (sound->getStatus() == sf::SoundSource::Status::Playing) {
+    //         sound->stop();
+    //     }
+    // }
 
 }
 // Character draw in screen-----------------------------------------------------------

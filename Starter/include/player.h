@@ -19,11 +19,11 @@ class Player {
     sf::SoundBuffer buffer;
     std::optional<sf::Sound> sound;
 
-    sf::Window window;
+    // sf::Window window;
 public:
 
     Player();
-    void Update();
+    void Update(float dt);
     void Draw(sf::RenderWindow&);
 };
 #endif //PLATFORMER_AGATHA_ROMAN_GARCIA_PLAYER_H

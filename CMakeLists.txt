@@ -4,5 +4,6 @@ project(Platformer_Agatha_Roman_Garcia)
 set(CMAKE_CXX_STANDARD 23)
 
 find_package(SFML COMPONENTS Audio Graphics Window System CONFIG REQUIRED)
+find_package(box2d CONFIG REQUIRED)
 
 add_subdirectory(Starter)

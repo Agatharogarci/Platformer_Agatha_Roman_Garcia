@@ -3,6 +3,8 @@ add_executable(Starter main.cpp
         src/game.cpp
         include/player.h
         src/player.cpp
-        include/constants.h)
+        include/constants.h
+        include/sensor.h
+        src/sensor.cpp)
 
-target_link_libraries(Starter PUBLIC SFML::Graphics SFML::Audio)
+target_link_libraries(Starter PUBLIC SFML::Graphics SFML::Audio box2d::box2d)

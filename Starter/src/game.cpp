@@ -7,7 +7,7 @@
 
 void Game::Initialize() {
 
-    
+
 
     //Set the window and frame rate ---------------------------------------------------
     window.create(sf::VideoMode({960, 540}),"Platformer");
@@ -17,9 +17,19 @@ void Game::Initialize() {
 
 void Game::Run() {
 
+
+    sf::Clock clock;
     //Close window action ----------------------------------------------------------
 
     while (window.isOpen()) {
+        // Clock logic
+
+        float dt = clock.restart().asSeconds();
+
+        if (dt > 0.25f) {
+            dt = 0.25f;
+        }
+
 
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
@@ -32,7 +42,7 @@ void Game::Run() {
             }
         }
 
-        player.Update();
+        player.Update(dt);
         window.clear(sf::Color::Black);
         player.Draw(window);
         window.display();
