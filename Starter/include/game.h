@@ -4,7 +4,7 @@
 
 #ifndef PLATFORMER_AGATHA_ROMAN_GARCIA_GAME_H
 #define PLATFORMER_AGATHA_ROMAN_GARCIA_GAME_H
-#include <SFML/Audio.hpp>
+#include <box2d/box2d.h>
 #include <SFML/Graphics.hpp>
 #include <optional>
 #include "player.h"
@@ -16,8 +16,15 @@ class Game {
 
     Player player;
 
+    b2WorldId world;
+    float accumulator = 0.0f;
+    static constexpr float kTimeStep = 1.0f / 60.0f;
+    static constexpr float kSubSteps = 4.f;
+
 
     public:
+    Game();
+    ~Game();
     void Initialize();
     void Run();
 

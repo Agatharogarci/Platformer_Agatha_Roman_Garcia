@@ -6,6 +6,8 @@
 #define PLATFORMER_AGATHA_ROMAN_GARCIA_PLAYER_H
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include "physical_object.h"
+#include "sensor.h"
 
 class Player {
     std::optional<sf::Sprite> character;
@@ -23,10 +25,13 @@ class Player {
     sf::SoundBuffer buffer;
     std::optional<sf::Sound> sound;
 
-    // sf::Window window;
+    PhysicalObject physics;
+    Sensor grounded;
+
 public:
 
     Player();
+    void SetupPhysics(b2WorldId world, b2Vec2 startPos);
     void Update(float dt);
     void Draw(sf::RenderWindow&);
 };

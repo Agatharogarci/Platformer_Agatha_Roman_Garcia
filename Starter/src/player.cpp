@@ -32,6 +32,9 @@ Player::Player()
 
 }
 
+void Player::SetupPhysics(b2WorldId world, b2Vec2 startPos) {
+    
+}
 
 
 void Player::Update(float dt) {
