@@ -6,6 +6,13 @@
 #include <box2d/box2d.h>
 
 
+PhysicalObject::~PhysicalObject() {
+    if (b2Body_IsValid(body_)) {
+        b2DestroyBody(body_);
+        body_ = b2_nullBodyId;
+    }
+}
+
 void PhysicalObject::Setup(b2WorldId world, b2BodyType type, b2Vec2 position, b2Vec2 halfSize, bool fixedRotation) {
     b2BodyDef def = b2DefaultBodyDef();
     def.type = type;

@@ -7,7 +7,7 @@
 #include "../include/game.h"
 #include "../include/constants.h"
 
-Game::Game() {
+Game::~Game() {
     if (b2World_IsValid(world)) {
         b2DestroyWorld(world);
     }

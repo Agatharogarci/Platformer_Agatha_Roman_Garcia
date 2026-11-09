@@ -23,7 +23,7 @@ class Game {
 
 
     public:
-    Game();
+    Game() = default;
     ~Game();
     void Initialize();
     void Run();
