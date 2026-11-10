@@ -16,10 +16,13 @@ class Game {
 
     Player player;
 
-    b2WorldId world;
+    PhysicalObject groundPhysics;
+    sf::RectangleShape groundShape;
+
+    b2WorldId world = b2_nullWorldId;
     float accumulator = 0.0f;
     static constexpr float kTimeStep = 1.0f / 60.0f;
-    static constexpr float kSubSteps = 4.f;
+    static constexpr int kSubSteps = 4;
 
 
     public:

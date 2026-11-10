@@ -19,7 +19,8 @@ class Player {
     bool moving = false;
 
     float animation_timer = 0.0f;           // Temps accumulé
-    const float frame_duration = 0.15f;     // Vitesse de l'animation : change d'image tous les 0.15 s
+    const float frame_duration = 0.15f; // Vitesse de l'animation : change d'image tous les 0.15 s
+    static constexpr float Y_VELOCITY = -12.f;
     bool current_walk_frame = false;
 
     sf::SoundBuffer buffer;
@@ -33,6 +34,7 @@ public:
     Player();
     void SetupPhysics(b2WorldId world, b2Vec2 startPos);
     void Update(float dt);
+    void Jump();
     void Draw(sf::RenderWindow&);
 };
 #endif //PLATFORMER_AGATHA_ROMAN_GARCIA_PLAYER_H

@@ -17,7 +17,7 @@ void Game::Initialize() {
 
 
     //Set the window and frame rate ---------------------------------------------------
-    window.create(sf::VideoMode({960, 540}),"Platformer");
+    window.create(sf::VideoMode({960, 800}),"Platformer");
     window.setFramerateLimit(60);
 
 
@@ -27,7 +27,29 @@ void Game::Initialize() {
     world = b2CreateWorld(&def);
 
     player.SetupPhysics(world, {Conversions::ScreenToPhysics(200.f), Conversions::ScreenToPhysics(200.f)});
+
+    const sf::Vector2f groundScreenSize = {960.f, 40.f};
+    const sf::Vector2f groundScreenPos = {480.f, 750.f};
+
+    groundShape.setSize(groundScreenSize);
+    groundShape.setOrigin({groundScreenSize.x / 2.f, groundScreenSize.y / 2.f}); // Origine au centre comme Box2D
+    groundShape.setPosition(groundScreenPos);
+    groundShape.setFillColor(sf::Color::Red);
+
+    //  Initialiser la physique du sol
+    b2Vec2 groundPhysicsPos = {
+        Conversions::ScreenToPhysics(groundScreenPos.x),
+        Conversions::ScreenToPhysics(groundScreenPos.y)
+    };
+    b2Vec2 groundHalfSize = {
+        Conversions::ScreenToPhysics(groundScreenSize.x / 2.f),
+        Conversions::ScreenToPhysics(groundScreenSize.y / 2.f)
+    };
+
+
+    groundPhysics.Setup(world, b2_staticBody, groundPhysicsPos, groundHalfSize);
 }
+
 
 
 
@@ -35,9 +57,6 @@ void Game::Run() {
 
 
     sf::Clock clock;
-    //Close window action ----------------------------------------------------------
-
-
 
     while (window.isOpen()) {
         // Clock logic
@@ -47,8 +66,8 @@ void Game::Run() {
         if (dt > 0.2f) {
             dt = 0.2f;
         }
-
-
+        std::println("temps ecoule {}", dt);
+        //Close window action ----------------------------------------------------------
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
@@ -58,14 +77,17 @@ void Game::Run() {
                     window.close();
                 }
             }
-            while (accumulator >= kTimeStep) {
-                b2World_Step(world, kTimeStep, kSubSteps);
-                accumulator -= kTimeStep;
-            }
+
+        }
+        accumulator += dt;
+        while (accumulator >= kTimeStep) {
+            b2World_Step(world, kTimeStep, kSubSteps);
+            accumulator -= kTimeStep;
         }
 
         player.Update(dt);
         window.clear(sf::Color::Black);
+        window.draw(groundShape);
         player.Draw(window);
         window.display();
     }

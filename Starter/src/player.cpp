@@ -51,34 +51,33 @@ void Player::Update(float dt) {
     //Movement logic ----------------------------------------------------
 
     moving = false;
-    float Speed = 200.f;
-    float Speed_Controller = 200.f;
+    float targetVx = 0.0f;
+    const float runSpeed = 6.0f;
+
 
 if (!sf::Joystick::isConnected(0)) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Left)) {
         moving = true;
-        character->move({-Speed * dt, 0.f});
-
-        //     character->setTexture(purple_walk_a, true);
-        //
-        // character->setTexture(purple_walk_b, true);
+        targetVx = -runSpeed;
         character->setScale({-1, 1});
     }
 
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Right)) {
         moving = true;
-        character->move({Speed * dt, 0});
+        targetVx = runSpeed;
         character->setScale({1, 1});
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Space)) {}
 }
     //Movement logic with controller -------------------------------------------------------
 
     const float x = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
     if (std::abs(x) > 20.f) {
         moving = true;
-        const float velocity_x = (x / 100.f) * Speed_Controller;
-        character->move({velocity_x * dt, 0});
+        targetVx = (x / 100.f) * runSpeed;
+
+
 
         if (x < 0.f) {
             character->setScale({-1, 1});
@@ -87,8 +86,15 @@ if (!sf::Joystick::isConnected(0)) {
         }
     }
 
+    b2Vec2 currentVelocity = physics.GetVelocity();
+    physics.SetVelocity({targetVx,currentVelocity.y});
 
-    //Sound logic-----------------------------------------------------------------
+    b2Vec2 physicPosition = physics.GetPosition();
+    character->setPosition({
+    Conversions::PhysicsToScreen(physicPosition.x),
+    Conversions::PhysicsToScreen(physicPosition.y)});
+
+    //Sound and Animation logic-----------------------------------------------------------------
 
     if (moving) {
         animation_timer += dt;
@@ -102,7 +108,7 @@ if (!sf::Joystick::isConnected(0)) {
         }else {
             character->setTexture(purple_walk_b, false);
         }
-        if (sound->getStatus() != sf::SoundSource::Status::Playing) {
+        if (sound.has_value() && sound->getStatus() != sf::SoundSource::Status::Playing) {
             sound->setPitch(0.90f);
             sound->play();
         }
@@ -115,6 +121,16 @@ if (!sf::Joystick::isConnected(0)) {
     }
 
 }
+
+void Player::Jump() {
+    if (grounded.HasTouched) {
+        std::println("Jump");
+        float xVelocity = physics.GetVelocity().x;
+        physics.SetVelocity({xVelocity, Y_VELOCITY });
+    }
+
+}
+
 // Character draw in screen-----------------------------------------------------------
 
 void Player::Draw(sf::RenderWindow& window) {

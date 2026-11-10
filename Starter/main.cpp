@@ -6,7 +6,7 @@
 int main()
 {
 Game game;
-Player player;
+
 
 
 

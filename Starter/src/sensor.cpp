@@ -9,7 +9,7 @@
 
 void Sensor::Setup(b2BodyId body_id, b2Vec2 halfSize) {
 
-    const b2Polygon pieds = b2MakeOffsetBox(halfSize.x, halfSize.y, {0,0}, b2Rot_identity);
+    const b2Polygon pieds = b2MakeOffsetBox(halfSize.x * 0.9f, 0.05f, {0.0f, halfSize.y}, b2MakeRot(0.0f));
 
     b2ShapeDef def = b2DefaultShapeDef();
     def.isSensor = true;
