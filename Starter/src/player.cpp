@@ -54,6 +54,7 @@ void Player::Jump() {
 }
 
 
+
 void Player::Update(float dt) {
 
 
@@ -77,7 +78,7 @@ if (!sf::Joystick::isConnected(0)) {
         targetVx = runSpeed;
         character->setScale({1, 1});
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Space)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
         Jump();
     }
 }
@@ -95,6 +96,9 @@ if (!sf::Joystick::isConnected(0)) {
         }else {
             character->setScale({1, 1});
         }
+    }
+    if (sf::Joystick::isButtonPressed(0,1)) {
+        Jump();
     }
 
     b2Vec2 currentVelocity = physics.GetVelocity();
@@ -119,15 +123,16 @@ if (!sf::Joystick::isConnected(0)) {
         }else {
             character->setTexture(purple_walk_b, false);
         }
-        if (sound.has_value() && sound->getStatus() != sf::SoundSource::Status::Playing) {
+        if (sound.has_value() && sound->getStatus() != sf::SoundSource::Status::Playing && grounded.HasTouched) {
             sound->setPitch(0.90f);
             sound->play();
         }
     }
     else {
+        character->setTexture(purple_front, true);
         if (sound->getStatus() == sf::SoundSource::Status::Playing) {
             sound->stop();
-            character->setTexture(purple_front, true);
+
         }
     }
 
