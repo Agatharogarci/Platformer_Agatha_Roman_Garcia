@@ -28,6 +28,7 @@ void PhysicalObject::Setup(b2WorldId world, b2BodyType type, b2Vec2 position, b2
     shape_def.density = 1.0f;
     shape_def.material.friction = 0.2f;
     shape_def.material.restitution = 0.0f;
+    shape_def.enableSensorEvents = true;
 
     b2CreatePolygonShape(body_, &shape_def, &square);
 }

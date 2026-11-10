@@ -44,6 +44,15 @@ void Player::SetupPhysics(b2WorldId world, b2Vec2 startPos) {
     grounded.Setup(physics.GetBodyId(), halfSize);
 }
 
+void Player::Jump() {
+    if (grounded.HasTouched) {
+
+        std::println("Jump");
+        float xVelocity = physics.GetVelocity().x;
+        physics.SetVelocity({xVelocity, Y_VELOCITY });
+    }
+}
+
 
 void Player::Update(float dt) {
 
@@ -52,7 +61,7 @@ void Player::Update(float dt) {
 
     moving = false;
     float targetVx = 0.0f;
-    const float runSpeed = 6.0f;
+    const float runSpeed = 12.0f;
 
 
 if (!sf::Joystick::isConnected(0)) {
@@ -68,7 +77,9 @@ if (!sf::Joystick::isConnected(0)) {
         targetVx = runSpeed;
         character->setScale({1, 1});
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Space)) {}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Space)) {
+        Jump();
+    }
 }
     //Movement logic with controller -------------------------------------------------------
 
@@ -122,14 +133,7 @@ if (!sf::Joystick::isConnected(0)) {
 
 }
 
-void Player::Jump() {
-    if (grounded.HasTouched) {
-        std::println("Jump");
-        float xVelocity = physics.GetVelocity().x;
-        physics.SetVelocity({xVelocity, Y_VELOCITY });
-    }
 
-}
 
 // Character draw in screen-----------------------------------------------------------
 

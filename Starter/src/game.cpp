@@ -6,6 +6,7 @@
 #include <box2d/box2d.h>
 #include "../include/game.h"
 #include "../include/constants.h"
+#include "../include/contact.h"
 
 Game::~Game() {
     if (b2World_IsValid(world)) {
@@ -18,12 +19,12 @@ void Game::Initialize() {
 
     //Set the window and frame rate ---------------------------------------------------
     window.create(sf::VideoMode({960, 800}),"Platformer");
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(144);
 
 
     // Initialisation Box2D
     b2WorldDef def = b2DefaultWorldDef();
-    def.gravity = {0.f, 9.81f}; // Gravité vers le bas en m/s²
+    def.gravity = {0.f, 30.f}; // Gravité vers le bas en m/s²
     world = b2CreateWorld(&def);
 
     player.SetupPhysics(world, {Conversions::ScreenToPhysics(200.f), Conversions::ScreenToPhysics(200.f)});
@@ -66,7 +67,7 @@ void Game::Run() {
         if (dt > 0.2f) {
             dt = 0.2f;
         }
-        std::println("temps ecoule {}", dt);
+
         //Close window action ----------------------------------------------------------
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
@@ -82,6 +83,7 @@ void Game::Run() {
         accumulator += dt;
         while (accumulator >= kTimeStep) {
             b2World_Step(world, kTimeStep, kSubSteps);
+            SensorContact(world);
             accumulator -= kTimeStep;
         }
 
