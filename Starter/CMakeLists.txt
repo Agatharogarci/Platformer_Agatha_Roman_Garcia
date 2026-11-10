@@ -8,6 +8,8 @@ add_executable(Starter main.cpp
         src/sensor.cpp
         include/physical_object.h
         src/physical_object.cpp
-        include/contact.h)
+        include/contact.h
+        include/enemy.h
+        src/enemy.cpp)
 
 target_link_libraries(Starter PUBLIC SFML::Graphics SFML::Audio box2d::box2d)
