@@ -21,6 +21,8 @@ void Game::Initialize() {
     window.create(sf::VideoMode({960, 800}),"Platformer");
     window.setFramerateLimit(144);
 
+    //Set menu----------------------------------------------------
+    menu.Initialize();
 
     // Initialisation Box2D
     b2WorldDef def = b2DefaultWorldDef();
@@ -77,20 +79,35 @@ void Game::Run() {
                 if (key->scancode == sf::Keyboard::Scan::Escape) {
                     window.close();
                 }
+
+            if (state == GameState::Menu) {
+                MenuAction action = menu.HandleInput(*key);
+                if (action == MenuAction::Play) {
+                    state = GameState::Playing;
+                } else if (action == MenuAction::Quit) {
+                    window.close();
+                }
             }
-
-        }
-        accumulator += dt;
-        while (accumulator >= kTimeStep) {
-            b2World_Step(world, kTimeStep, kSubSteps);
-            SensorContact(world);
-            accumulator -= kTimeStep;
         }
 
+        }
+        if (state == GameState::Playing) {
+            accumulator += dt;
+            while (accumulator >= kTimeStep) {
+                b2World_Step(world, kTimeStep, kSubSteps);
+                SensorContact(world);
+                accumulator -= kTimeStep;
+            }
+        }
         player.Update(dt);
         window.clear(sf::Color::Black);
-        window.draw(groundShape);
-        player.Draw(window);
+        if (state == GameState::Menu) {
+            menu.DrawMenu(window);
+        }
+        else if (state == GameState::Playing) {
+            window.draw(groundShape);
+            player.Draw(window);
+        }
         window.display();
     }
 }

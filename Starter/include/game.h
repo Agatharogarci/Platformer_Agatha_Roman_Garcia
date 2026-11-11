@@ -7,9 +7,15 @@
 #include <box2d/box2d.h>
 #include <SFML/Graphics.hpp>
 #include <optional>
-#include "player.h"
 
+#include "menu.h"
+#include "player.h"
+enum class GameState {
+    Menu,
+    Playing
+};
 class Game {
+
     sf::RenderWindow window;
     std::optional<sf::Sprite> sprite;
     sf::Texture texture;
@@ -23,6 +29,9 @@ class Game {
     float accumulator = 0.0f;
     static constexpr float kTimeStep = 1.0f / 60.0f;
     static constexpr int kSubSteps = 4;
+
+    GameState state = GameState::Menu;
+    Menu menu;
 
 
     public:

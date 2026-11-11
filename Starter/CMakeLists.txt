@@ -10,6 +10,8 @@ add_executable(Starter main.cpp
         src/physical_object.cpp
         include/contact.h
         include/enemy.h
-        src/enemy.cpp)
+        src/enemy.cpp
+        include/menu.h
+        src/menu.cpp)
 
 target_link_libraries(Starter PUBLIC SFML::Graphics SFML::Audio box2d::box2d)
