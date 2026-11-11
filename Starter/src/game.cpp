@@ -24,7 +24,7 @@ void Game::Initialize() {
 
     // Initialisation Box2D
     b2WorldDef def = b2DefaultWorldDef();
-    def.gravity = {0.f, 20.f}; // Gravité vers le bas en m/s²
+    def.gravity = {0.f, 40.f}; // Gravité vers le bas en m/s²
     world = b2CreateWorld(&def);
 
     player.SetupPhysics(world, {Conversions::ScreenToPhysics(200.f), Conversions::ScreenToPhysics(200.f)});

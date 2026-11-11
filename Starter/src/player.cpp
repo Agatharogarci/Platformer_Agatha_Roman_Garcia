@@ -102,6 +102,15 @@ if (!sf::Joystick::isConnected(0)) {
     }
 
     b2Vec2 currentVelocity = physics.GetVelocity();
+
+
+    if (currentVelocity.y > 0.1f) {
+        physics.SetGravityScale(2.f);
+    } else {
+        physics.SetGravityScale(1.0f);
+    }
+
+    physics.SetVelocity({targetVx, currentVelocity.y});
     physics.SetVelocity({targetVx,currentVelocity.y});
 
     b2Vec2 physicPosition = physics.GetPosition();
@@ -111,7 +120,7 @@ if (!sf::Joystick::isConnected(0)) {
 
     //Sound and Animation logic-----------------------------------------------------------------
 
-    if (moving) {
+    if (moving && grounded.HasTouched) {
         animation_timer += dt;
 
         if (animation_timer >= frame_duration) {
@@ -133,6 +142,9 @@ if (!sf::Joystick::isConnected(0)) {
         if (sound->getStatus() == sf::SoundSource::Status::Playing) {
             sound->stop();
 
+        }
+        else if (!grounded.HasTouched) {
+            character->setTexture(purple_jump, true);
         }
     }
 

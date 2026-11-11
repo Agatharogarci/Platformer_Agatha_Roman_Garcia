@@ -18,9 +18,9 @@ class Player {
 
     bool moving = false;
 
-    float animation_timer = 0.0f;           // Temps accumulé
-    const float frame_duration = 0.15f; // Vitesse de l'animation : change d'image tous les 0.15 s
-    static constexpr float Y_VELOCITY = -15.f;
+    float animation_timer = 0.0f;
+    const float frame_duration = 0.15f;
+    static constexpr float Y_VELOCITY = -25.f;
     bool current_walk_frame = false;
 
     sf::SoundBuffer buffer;

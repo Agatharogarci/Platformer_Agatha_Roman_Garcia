@@ -13,6 +13,7 @@ PhysicalObject::~PhysicalObject() {
     }
 }
 
+
 void PhysicalObject::Setup(b2WorldId world, b2BodyType type, b2Vec2 position, b2Vec2 halfSize, bool fixedRotation) {
     b2BodyDef def = b2DefaultBodyDef();
     def.type = type;
@@ -50,5 +51,10 @@ b2Vec2 PhysicalObject::GetVelocity() const {
 void PhysicalObject::SetVelocity(b2Vec2 vel) {
     if (b2Body_IsValid(body_)) {
         b2Body_SetLinearVelocity(body_, vel);
+    }
+}
+void PhysicalObject::SetGravityScale(float scale) {
+    if (b2Body_IsValid(body_)) {
+        b2Body_SetGravityScale(body_, scale);
     }
 }
