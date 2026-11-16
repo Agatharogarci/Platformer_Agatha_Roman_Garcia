@@ -7,12 +7,16 @@
 #include "../include/game.h"
 #include "../include/constants.h"
 #include "../include/contact.h"
+#include "../include/health.h"
 
 Game::~Game() {
     if (b2World_IsValid(world)) {
         b2DestroyWorld(world);
     }
 }
+
+
+
 void Game::Initialize() {
 
 
@@ -23,6 +27,7 @@ void Game::Initialize() {
 
     //Set menu----------------------------------------------------
     menu.Initialize();
+    health.Initialize();
 
     // Initialisation Box2D
     b2WorldDef def = b2DefaultWorldDef();
@@ -116,6 +121,8 @@ void Game::Run() {
                 accumulator -= kTimeStep;
             }
         }
+        health.DrawHealth(window);
+
         player.Update(dt);
         enemy.UpdateSaw(dt);
         window.clear(sf::Color::Black);

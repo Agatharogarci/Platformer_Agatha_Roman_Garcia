@@ -12,6 +12,9 @@ add_executable(Starter main.cpp
         include/enemy.h
         src/enemy.cpp
         include/menu.h
-        src/menu.cpp)
+        src/menu.cpp
+        include/health.h
+        src/health.cpp
+)
 
 target_link_libraries(Starter PUBLIC SFML::Graphics SFML::Audio box2d::box2d)

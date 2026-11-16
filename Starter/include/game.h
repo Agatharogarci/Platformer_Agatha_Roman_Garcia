@@ -11,6 +11,8 @@
 #include "menu.h"
 #include "player.h"
 #include "enemy.h"
+#include "health.h"
+
 enum class GameState {
     Menu,
     Playing
@@ -23,6 +25,7 @@ class Game {
 
     Player player;
     Enemy enemy;
+    Health health;
 
     PhysicalObject groundPhysics;
     sf::Texture groundTexture;
