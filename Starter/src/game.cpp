@@ -70,7 +70,7 @@ void Game::Run() {
             dt = 0.2f;
         }
 
-        //Close window action ----------------------------------------------------------
+        //Close window action && Menu ----------------------------------------------------------
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
@@ -89,6 +89,10 @@ void Game::Run() {
                 }
             }
         }
+            else if (const auto* resize = event->getIf<sf::Event::Resized>()) {
+                sf::FloatRect visibleArea({0.f, 0.f}, sf::Vector2f(resize->size));
+                window.setView(sf::View(visibleArea));
+            }
 
         }
         if (state == GameState::Playing) {
