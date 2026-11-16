@@ -10,22 +10,31 @@
 #include "sensor.h"
 
 class Player {
+    // Sprites for character----------------------------------------------------------
     std::optional<sf::Sprite> character;
     sf::Texture purple_front;
     sf::Texture purple_jump;
     sf::Texture purple_walk_a;
     sf::Texture purple_walk_b;
 
-    bool moving = false;
+    // Character logic-----------------------------------------------------------------
+     bool moving = false;
+    int hearts = 3;
+    int currentHearts = 3;
+    float invincibilityTimer = 0.f;
+    bool isInvincible = false;
 
+    //Character Animations-----------------------------------------------------------
     float animation_timer = 0.0f;
     const float frame_duration = 0.15f;
     static constexpr float Y_VELOCITY = -25.f;
     bool current_walk_frame = false;
 
+    //Character sounds--------------------------------------------------------------
     sf::SoundBuffer buffer;
     std::optional<sf::Sound> sound;
 
+    //Character physics-------------------------------------------------------------
     PhysicalObject physics;
     Sensor grounded;
 
@@ -34,6 +43,7 @@ public:
     Player();
     void SetupPhysics(b2WorldId world, b2Vec2 startPos);
     void Jump();
+    void TakeDamage(int amount);
     void Update(float dt);
 
 

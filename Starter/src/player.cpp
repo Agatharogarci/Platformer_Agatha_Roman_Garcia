@@ -53,6 +53,13 @@ void Player::Jump() {
     }
 }
 
+void Player::TakeDamage(int amount) {
+    if (isInvincible == true && amount < hearts) {}
+    hearts -= amount;
+    if (hearts <= 0) {
+        hearts = 0;
+    }
+}
 
 
 void Player::Update(float dt) {
