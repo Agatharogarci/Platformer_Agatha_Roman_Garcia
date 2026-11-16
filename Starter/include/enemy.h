@@ -12,7 +12,16 @@ class Enemy {
     sf::Texture saw_b;
 
     PhysicalObject physics;
+
+    float speed = 5.0f;
+    float animation_timer = 0.f;
+    bool current_frame = false;
+
     public:
+
+    Enemy();
     void SetupPhysicsM(b2WorldId world, b2Vec2 startPos);
+    void UpdateSaw(float dt);
+    void Draw(sf::RenderWindow& window);
 };
 #endif //PLATFORMER_AGATHA_ROMAN_GARCIA_ENEMY_H

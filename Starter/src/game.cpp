@@ -29,7 +29,11 @@ void Game::Initialize() {
     def.gravity = {0.f, 40.f}; // Gravité vers le bas en m/s²
     world = b2CreateWorld(&def);
 
-    player.SetupPhysics(world, {Conversions::ScreenToPhysics(200.f), Conversions::ScreenToPhysics(200.f)});
+    player.SetupPhysics(world, {Conversions::ScreenToPhysics(200.f),
+        Conversions::ScreenToPhysics(200.f)});
+
+    enemy.SetupPhysicsM(world, {Conversions::ScreenToPhysics(400.f),
+        Conversions::ScreenToPhysics(675.f)});
 
     const sf::Vector2f groundScreenSize = {960.f, 40.f};
     const sf::Vector2f groundScreenPos = {480.f, 750.f};
@@ -104,6 +108,7 @@ void Game::Run() {
             }
         }
         player.Update(dt);
+        enemy.UpdateSaw(dt);
         window.clear(sf::Color::Black);
         if (state == GameState::Menu) {
             menu.DrawMenu(window);
@@ -111,6 +116,7 @@ void Game::Run() {
         else if (state == GameState::Playing) {
             window.draw(groundShape);
             player.Draw(window);
+            enemy.Draw(window);
         }
         window.display();
     }
