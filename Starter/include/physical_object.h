@@ -26,6 +26,7 @@ public:
 
 
     void Setup(b2WorldId world, b2BodyType type, b2Vec2 position, b2Vec2 halfSize, bool fixedRotation = true);
+    void SetupCircle(b2WorldId world, b2BodyType type, b2Vec2 position, b2Vec2 halfSize, bool fixedRotation = true);
     void Destroy();
 
     b2Vec2 GetPosition() const;

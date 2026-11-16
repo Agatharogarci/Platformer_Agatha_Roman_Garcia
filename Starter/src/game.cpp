@@ -18,7 +18,7 @@ void Game::Initialize() {
 
 
     //Set the window and frame rate ---------------------------------------------------
-    window.create(sf::VideoMode({960, 800}),"Platformer");
+    window.create(sf::VideoMode({960, 775}),"Platformer");
     window.setFramerateLimit(144);
 
     //Set menu----------------------------------------------------
@@ -35,13 +35,22 @@ void Game::Initialize() {
     enemy.SetupPhysicsM(world, {Conversions::ScreenToPhysics(400.f),
         Conversions::ScreenToPhysics(675.f)});
 
-    const sf::Vector2f groundScreenSize = {960.f, 40.f};
+    const sf::Vector2f groundScreenSize = {960.f, 64.f};
     const sf::Vector2f groundScreenPos = {480.f, 750.f};
 
     groundShape.setSize(groundScreenSize);
     groundShape.setOrigin({groundScreenSize.x / 2.f, groundScreenSize.y / 2.f}); // Origine au centre comme Box2D
     groundShape.setPosition(groundScreenPos);
-    groundShape.setFillColor(sf::Color::Red);
+
+    if (!groundTexture.loadFromFile("../../Starter/ressources/terrain_grass_block_top.png")) {
+        std::println("erreur pas de sol pour toi");
+    }
+
+    groundTexture.setRepeated(true);
+
+    groundShape.setTexture(&groundTexture);
+
+    groundShape.setTextureRect(sf::IntRect({0, 0}, {960, 40}));
 
     //  Initialiser la physique du sol
     b2Vec2 groundPhysicsPos = {

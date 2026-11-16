@@ -26,7 +26,7 @@ void Enemy::SetupPhysicsM(b2WorldId world, b2Vec2 startPos) {
         Conversions::ScreenToPhysics(size.y / 2.f)
     };
 
-    physics.Setup(world, b2_kinematicBody, startPos, halfSize);
+    physics.SetupCircle(world, b2_kinematicBody, startPos, halfSize);
 
 }
 

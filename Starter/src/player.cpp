@@ -36,8 +36,8 @@ Player::Player()
 void Player::SetupPhysics(b2WorldId world, b2Vec2 startPos) {
     sf::Vector2u size = purple_front.getSize();
     b2Vec2 halfSize = {
-        Conversions::ScreenToPhysics(size.x / 2.f),
-        Conversions::ScreenToPhysics(size.y / 2.f)
+        Conversions::ScreenToPhysics((size.x / 2.f) * 0.55f),
+        Conversions::ScreenToPhysics((size.y / 2.f) * 0.95f)
     };
 
     physics.Setup(world, b2_dynamicBody, startPos, halfSize);

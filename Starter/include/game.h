@@ -25,6 +25,7 @@ class Game {
     Enemy enemy;
 
     PhysicalObject groundPhysics;
+    sf::Texture groundTexture;
     sf::RectangleShape groundShape;
 
     b2WorldId world = b2_nullWorldId;
