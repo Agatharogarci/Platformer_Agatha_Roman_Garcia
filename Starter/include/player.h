@@ -44,6 +44,7 @@ public:
     void SetupPhysics(b2WorldId world, b2Vec2 startPos);
     void Jump();
     void TakeDamage(int amount);
+    sf::Vector2f GetScreenPosition() const;
     void Update(float dt);
 
 

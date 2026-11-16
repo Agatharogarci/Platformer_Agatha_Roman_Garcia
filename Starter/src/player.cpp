@@ -61,6 +61,13 @@ void Player::TakeDamage(int amount) {
     }
 }
 
+sf::Vector2f Player::GetScreenPosition() const {
+    if (character.has_value()) {
+        return character->getPosition();
+    }
+    return {0.f, 0.f};
+}
+
 
 void Player::Update(float dt) {
 

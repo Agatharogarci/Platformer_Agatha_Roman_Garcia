@@ -126,6 +126,10 @@ void Game::Run() {
             window.draw(groundShape);
             player.Draw(window);
             enemy.Draw(window);
+
+            if (player.GetScreenPosition().y > 800.f) {
+                player.TakeDamage(3);
+            }
         }
         window.display();
     }
