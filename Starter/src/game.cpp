@@ -121,11 +121,12 @@ void Game::Run() {
                 accumulator -= kTimeStep;
             }
         }
-        health.DrawHealth(window);
+
 
         player.Update(dt);
         enemy.UpdateSaw(dt);
         window.clear(sf::Color::Black);
+        health.DrawHealth(window);
         if (state == GameState::Menu) {
             menu.DrawMenu(window);
         }
