@@ -9,13 +9,15 @@
 #include <optional>
 
 #include "menu.h"
+#include "game_over.h"
 #include "player.h"
 #include "enemy.h"
 #include "health.h"
 
 enum class GameState {
     Menu,
-    Playing
+    Playing,
+    GameOver
 };
 class Game {
 
@@ -38,6 +40,7 @@ class Game {
 
     GameState state = GameState::Menu;
     Menu menu;
+    GameOver gameOver;
 
 
     public:

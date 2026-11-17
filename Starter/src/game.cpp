@@ -33,6 +33,7 @@ void Game::Initialize() {
     //Set menu----------------------------------------------------
     menu.Initialize();
     health.Initialize();
+    gameOver.Initialize();
 
     // Initialisation Box2D
     b2WorldDef def = b2DefaultWorldDef();
@@ -111,6 +112,17 @@ void Game::Run() {
                     window.close();
                 }
             }
+                if (state == GameState::GameOver) {
+                    GameOverAction action = gameOver.HandleInput(*key);
+                    if (action == GameOverAction::Retry) {
+                        RestartLevel();
+                        state = GameState::Playing;
+                    }else if (action == GameOverAction::MainMenu) {
+                        state = GameState::Menu;
+                    }else if (action == GameOverAction::Quit) {
+                        window.close();
+                    }
+                }
         }
             else if (const auto* resize = event->getIf<sf::Event::Resized>()) {
                 sf::FloatRect visibleArea({0.f, 0.f}, sf::Vector2f(resize->size));
@@ -136,6 +148,9 @@ void Game::Run() {
         if (state == GameState::Menu) {
             menu.DrawMenu(window);
         }
+        else if (state == GameState::GameOver) {
+            gameOver.DrawMenu(window);
+        }
         else if (state == GameState::Playing) {
             window.draw(groundShape);
             player.Draw(window);
@@ -147,10 +162,12 @@ void Game::Run() {
             }
             if (player.GetScreenPosition().y > 800.f) {
                 player.TakeDamage(3);
+
             }
 
             if (player.GetCurrentHearts() <= 0) {
-                RestartLevel();
+                state = GameState::GameOver;
+
             }
 
             health.DrawHealth(window);

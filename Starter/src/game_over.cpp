@@ -11,8 +11,8 @@ bool GameOver::Initialize() {
         std::println("failed to load font");
         return false;
     }
-    retryText.emplace(font, "Retry", 75);
-    retryText->setPosition({275.f, 180.f});
+    retryText.emplace(font, "Retry", 50);
+    retryText->setPosition({440.f, 260.f});
 
     mainMenuText.emplace(font, "Main Menu", 50);
     mainMenuText->setPosition({440.f, 360.f});
