@@ -56,7 +56,9 @@ void Player::Jump() {
 void Player::TakeDamage(int amount) {
     if (isInvincible == true && amount < hearts) {}
     hearts -= amount;
+    std::println("TakeDamage1");
     if (hearts <= 0) {
+        std::println("TakeDamage");
         hearts = 0;
     }
 }

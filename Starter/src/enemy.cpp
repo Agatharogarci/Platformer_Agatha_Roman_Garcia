@@ -28,6 +28,8 @@ void Enemy::SetupPhysicsM(b2WorldId world, b2Vec2 startPos) {
 
     physics.SetupCircle(world, b2_kinematicBody, startPos, halfSize);
 
+    hitSensor.Setup(physics.GetBodyId(), {halfSize.x + 0.05f, halfSize.y + 0.05f});
+
 }
 
 void Enemy::UpdateSaw(float dt) {

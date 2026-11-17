@@ -16,6 +16,7 @@ PhysicalObject::~PhysicalObject() {
 
 void PhysicalObject::Setup(b2WorldId world, b2BodyType type, b2Vec2 position, b2Vec2 halfSize, bool fixedRotation) {
     b2BodyDef def = b2DefaultBodyDef();
+
     def.type = type;
     def.position = position;
     def.fixedRotation = true; // Empêche le personnage ou la plateforme de pivoter/tomber sur le côté

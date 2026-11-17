@@ -3,6 +3,7 @@
 //
 #include <print>
 #include <SFML/Graphics.hpp>
+#include <cmath>
 #include <box2d/box2d.h>
 #include "../include/game.h"
 #include "../include/constants.h"
@@ -118,6 +119,7 @@ void Game::Run() {
             while (accumulator >= kTimeStep) {
                 b2World_Step(world, kTimeStep, kSubSteps);
                 SensorContact(world);
+
                 accumulator -= kTimeStep;
             }
         }
@@ -126,7 +128,7 @@ void Game::Run() {
         player.Update(dt);
         enemy.UpdateSaw(dt);
         window.clear(sf::Color::Black);
-        health.DrawHealth(window);
+
         if (state == GameState::Menu) {
             menu.DrawMenu(window);
         }
@@ -134,6 +136,13 @@ void Game::Run() {
             window.draw(groundShape);
             player.Draw(window);
             enemy.Draw(window);
+
+            sf::Vector2f diff = player.GetScreenPosition() - enemy.GetScreenPosition();
+            if (std::hypot(diff.x, diff.y) < 100.f) {
+                player.TakeDamage(1);
+            }
+
+            health.DrawHealth(window);
 
             if (player.GetScreenPosition().y > 800.f) {
                 player.TakeDamage(3);
