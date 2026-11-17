@@ -43,6 +43,7 @@ class Game {
     public:
     Game() = default;
     ~Game();
+    void RestartLevel();
     void Initialize();
     void Run();
 

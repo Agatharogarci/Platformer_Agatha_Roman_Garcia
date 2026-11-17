@@ -16,6 +16,10 @@ Game::~Game() {
     }
 }
 
+void Game::RestartLevel() {
+    player.Reset({Conversions::ScreenToPhysics(200.f),
+                  Conversions::ScreenToPhysics(200.f)});
+}
 
 
 void Game::Initialize() {
@@ -140,6 +144,13 @@ void Game::Run() {
             sf::Vector2f diff = player.GetScreenPosition() - enemy.GetScreenPosition();
             if (std::hypot(diff.x, diff.y) < 100.f) {
                 player.TakeDamage(1);
+            }
+            if (player.GetScreenPosition().y > 800.f) {
+                player.TakeDamage(3);
+            }
+
+            if (player.GetCurrentHearts() <= 0) {
+                RestartLevel();
             }
 
             health.DrawHealth(window);

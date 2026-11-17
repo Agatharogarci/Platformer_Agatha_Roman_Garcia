@@ -15,6 +15,8 @@ add_executable(Starter main.cpp
         src/menu.cpp
         include/health.h
         src/health.cpp
+        include/game_over.h
+        src/game_over.cpp
 )
 
 target_link_libraries(Starter PUBLIC SFML::Graphics SFML::Audio box2d::box2d)

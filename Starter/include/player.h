@@ -46,8 +46,8 @@ public:
     void TakeDamage(int amount);
     sf::Vector2f GetScreenPosition() const;
     void Update(float dt);
-
-
+    int GetCurrentHearts() const { return currentHearts; }
+    void Reset(b2Vec2 startPos);
     void Draw(sf::RenderWindow&);
 };
 #endif //PLATFORMER_AGATHA_ROMAN_GARCIA_PLAYER_H

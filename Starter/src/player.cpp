@@ -5,6 +5,9 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "..\..\Starter\include\player.h"
+
+#include <box2d/box2d.h>
+
 #include "..\..\Starter\include\constants.h"
 
 
@@ -20,7 +23,9 @@ Player::Player()
     //SPRITE and SOUND --------------------------------------------------------------------
 
 
-    buffer.loadFromFile("../../Starter/sounds/footstep_grass_000.ogg");
+    if (!buffer.loadFromFile("../../Starter/sounds/footstep_grass_000.ogg")) {
+         std::println("failed to load footstep_grass_000.ogg");
+    }
 
     sound = sf::Sound(buffer);
 
@@ -54,12 +59,12 @@ void Player::Jump() {
 }
 
 void Player::TakeDamage(int amount) {
-    if (isInvincible == true && amount < hearts) {}
-    hearts -= amount;
-    std::println("TakeDamage1");
-    if (hearts <= 0) {
-        std::println("TakeDamage");
-        hearts = 0;
+    if (isInvincible == true && amount < currentHearts) {}
+    currentHearts -= amount;
+    std::println("TakeDamage");
+    if (currentHearts <= 0) {
+        std::println("Dead");
+        currentHearts = 0;
     }
 }
 
@@ -169,6 +174,16 @@ if (!sf::Joystick::isConnected(0)) {
 
 
 // Character draw in screen-----------------------------------------------------------
+
+void Player::Reset(b2Vec2 startPos) {
+    currentHearts = hearts;
+    isInvincible = false;
+    invincibilityTimer = 0.f;
+
+
+    b2Body_SetTransform(physics.GetBodyId(), startPos, b2MakeRot(0.f));
+    physics.SetVelocity({0.f, 0.f});
+}
 
 void Player::Draw(sf::RenderWindow& window) {
 
