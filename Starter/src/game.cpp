@@ -11,6 +11,7 @@
 #include "../include/health.h"
 
 Game::~Game() {
+    platforms.clear();
     if (b2World_IsValid(world)) {
         b2DestroyWorld(world);
     }
@@ -21,6 +22,28 @@ void Game::RestartLevel() {
                   Conversions::ScreenToPhysics(200.f)});
 }
 
+void Game::AddPlatform(sf::Vector2f screenPos, sf::Vector2f screenSize) {
+    auto& plat = platforms.emplace_back(std::make_unique<Platform>());
+
+
+    plat->shape.setSize(screenSize);
+    plat->shape.setOrigin({screenSize.x / 2.f, screenSize.y / 2.f});
+    plat->shape.setPosition(screenPos);
+    plat->shape.setTexture(&groundTexture);
+    plat->shape.setTextureRect(sf::IntRect({0, 0}, {static_cast<int>(screenSize.x), 40}));
+
+
+    b2Vec2 physicsPos = {
+        Conversions::ScreenToPhysics(screenPos.x),
+        Conversions::ScreenToPhysics(screenPos.y)
+    };
+    b2Vec2 halfSize = {
+        Conversions::ScreenToPhysics(screenSize.x / 2.f),
+        Conversions::ScreenToPhysics(screenSize.y / 2.f)
+    };
+
+    plat->physics.Setup(world, b2_staticBody, physicsPos, halfSize);
+}
 
 void Game::Initialize() {
 
@@ -43,15 +66,8 @@ void Game::Initialize() {
     player.SetupPhysics(world, {Conversions::ScreenToPhysics(200.f),
         Conversions::ScreenToPhysics(200.f)});
 
-    enemy.SetupPhysicsM(world, {Conversions::ScreenToPhysics(400.f),
-        Conversions::ScreenToPhysics(675.f)});
-
-    const sf::Vector2f groundScreenSize = {960.f, 64.f};
-    const sf::Vector2f groundScreenPos = {480.f, 750.f};
-
-    groundShape.setSize(groundScreenSize);
-    groundShape.setOrigin({groundScreenSize.x / 2.f, groundScreenSize.y / 2.f}); // Origine au centre comme Box2D
-    groundShape.setPosition(groundScreenPos);
+    // enemy.SetupPhysicsM(world, {Conversions::ScreenToPhysics(400.f),
+    //     Conversions::ScreenToPhysics(675.f)});
 
     if (!groundTexture.loadFromFile("../../Starter/ressources/terrain_grass_block_top.png")) {
         std::println("erreur pas de sol pour toi");
@@ -59,28 +75,21 @@ void Game::Initialize() {
 
     groundTexture.setRepeated(true);
 
-    groundShape.setTexture(&groundTexture);
-
-    groundShape.setTextureRect(sf::IntRect({0, 0}, {960, 40}));
-
-    //  Initialiser la physique du sol
-    b2Vec2 groundPhysicsPos = {
-        Conversions::ScreenToPhysics(groundScreenPos.x),
-        Conversions::ScreenToPhysics(groundScreenPos.y)
-    };
-    b2Vec2 groundHalfSize = {
-        Conversions::ScreenToPhysics(groundScreenSize.x / 2.f),
-        Conversions::ScreenToPhysics(groundScreenSize.y / 2.f)
-    };
+    AddPlatform({580.f, 675.f}, {960.f, 64.f});
+    AddPlatform({650.f, 580.f}, {200.f, 40.f});
+    AddPlatform({950.f, 460.f}, {200.f, 40.f});
 
 
-    groundPhysics.Setup(world, b2_staticBody, groundPhysicsPos, groundHalfSize);
+
 }
 
 
 
 
 void Game::Run() {
+
+    sf::View camera(sf::FloatRect({0.f, 0.f}, {960.f, 775.f}));
+    constexpr float scrollSpeed = 50.f;
 
 
     sf::Clock clock;
@@ -116,6 +125,7 @@ void Game::Run() {
                     GameOverAction action = gameOver.HandleInput(*key);
                     if (action == GameOverAction::Retry) {
                         RestartLevel();
+                        camera.resetPosition();
                         state = GameState::Playing;
                     }else if (action == GameOverAction::MainMenu) {
                         state = GameState::Menu;
@@ -142,8 +152,10 @@ void Game::Run() {
 
 
         player.Update(dt);
-        enemy.UpdateSaw(dt);
+        camera.move({scrollSpeed * dt, 0.f});
+        //enemy.UpdateSaw(dt);
         window.clear(sf::Color::Black);
+
 
         if (state == GameState::Menu) {
             menu.DrawMenu(window);
@@ -152,14 +164,19 @@ void Game::Run() {
             gameOver.DrawMenu(window);
         }
         else if (state == GameState::Playing) {
-            window.draw(groundShape);
-            player.Draw(window);
-            enemy.Draw(window);
 
-            sf::Vector2f diff = player.GetScreenPosition() - enemy.GetScreenPosition();
-            if (std::hypot(diff.x, diff.y) < 100.f) {
-                player.TakeDamage(1);
+            for (const auto& plat : platforms) {
+                window.draw(plat->shape);
             }
+
+            player.Draw(window);
+            window.setView(sf::View(camera));
+            //enemy.Draw(window);
+
+            // sf::Vector2f diff = player.GetScreenPosition() - enemy.GetScreenPosition();
+            // if (std::hypot(diff.x, diff.y) < 100.f) {
+            //     player.TakeDamage(1);
+            // }
             if (player.GetScreenPosition().y > 800.f) {
                 player.TakeDamage(3);
 

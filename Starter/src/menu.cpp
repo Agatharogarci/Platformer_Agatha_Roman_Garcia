@@ -19,6 +19,8 @@ bool Menu::Initialize() {
 
     quitText.emplace(font, "Quit", 40);
     quitText->setPosition({440.f, 440.f});
+
+    return true;
 }
 
 void Menu::UpdateTextColors() {

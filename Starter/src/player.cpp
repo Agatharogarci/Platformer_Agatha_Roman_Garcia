@@ -61,6 +61,8 @@ void Player::Jump() {
 void Player::TakeDamage(int amount) {
     if (isInvincible == true && amount < currentHearts) {}
     currentHearts -= amount;
+    isInvincible = true;
+    invincibilityTimer = 1.5f;
     std::println("TakeDamage");
     if (currentHearts <= 0) {
         std::println("Dead");
@@ -79,6 +81,13 @@ sf::Vector2f Player::GetScreenPosition() const {
 void Player::Update(float dt) {
 
 
+    if (isInvincible == true) {
+        invincibilityTimer -= dt;
+    }
+    if (invincibilityTimer <= 0.f) {
+        isInvincible = false;
+        invincibilityTimer = 0.f;
+    }
     //Movement logic ----------------------------------------------------
 
     moving = false;

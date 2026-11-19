@@ -7,12 +7,18 @@
 #include <box2d/box2d.h>
 #include <SFML/Graphics.hpp>
 #include <optional>
+#include <vector>
 
 #include "menu.h"
 #include "game_over.h"
 #include "player.h"
 #include "enemy.h"
 #include "health.h"
+
+struct Platform {
+    sf::RectangleShape shape;
+    PhysicalObject physics;
+};
 
 enum class GameState {
     Menu,
@@ -22,6 +28,7 @@ enum class GameState {
 class Game {
 
     sf::RenderWindow window;
+    sf::View camera;
     std::optional<sf::Sprite> sprite;
     sf::Texture texture;
 
@@ -29,9 +36,11 @@ class Game {
     Enemy enemy;
     Health health;
 
-    PhysicalObject groundPhysics;
+    // PhysicalObject groundPhysics;
     sf::Texture groundTexture;
-    sf::RectangleShape groundShape;
+    std::vector<std::unique_ptr<Platform>> platforms;
+    void AddPlatform(sf::Vector2f screenPos, sf::Vector2f screenSize);
+    // sf::RectangleShape groundShape;
 
     b2WorldId world = b2_nullWorldId;
     float accumulator = 0.0f;

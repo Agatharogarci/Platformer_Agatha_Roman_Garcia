@@ -11,7 +11,7 @@
 #include "sensor.h"
 
 
-void SensorContact(b2WorldId worldId){
+inline void SensorContact(b2WorldId worldId){
 
     const b2SensorEvents sensors = b2World_GetSensorEvents(worldId);
 

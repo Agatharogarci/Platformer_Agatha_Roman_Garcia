@@ -21,6 +21,7 @@ class Player {
      bool moving = false;
     int hearts = 3;
     int currentHearts = 3;
+    float invincibilityDuration = 1.5f;
     float invincibilityTimer = 0.f;
     bool isInvincible = false;
 
