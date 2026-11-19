@@ -11,14 +11,20 @@ bool GameOver::Initialize() {
         std::println("failed to load font");
         return false;
     }
+    GameOverText.emplace(font, "Game Over", 75);
+    GameOverText->setFillColor(sf::Color::Yellow);
+    GameOverText->setPosition({300.f, 60});
+
     retryText.emplace(font, "Retry", 50);
-    retryText->setPosition({440.f, 260.f});
+    retryText->setPosition({375.f, 260.f});
 
     mainMenuText.emplace(font, "Main Menu", 50);
-    mainMenuText->setPosition({440.f, 360.f});
+    mainMenuText->setPosition({375.f, 360.f});
 
     quitText.emplace(font, "Quit", 40);
-    quitText->setPosition({440.f, 440.f});
+    quitText->setPosition({375.f, 440.f});
+
+    return true;
 }
 
 
@@ -31,13 +37,17 @@ void GameOver::UpdateTextColors() {
 }
 
 GameOverAction GameOver::HandleInput(const sf::Event::KeyPressed &key) {
-    if (key.scancode == sf::Keyboard::Scan::Up || key.scancode == sf::Keyboard::Scan::Down) {
+    if (key.scancode == sf::Keyboard::Scan::Up) {
         selectedIndex = (selectedIndex - 1 + 3) % 3;
         UpdateTextColors();
     }
+    else if (key.scancode == sf::Keyboard::Scan::Down) {
+        selectedIndex = (selectedIndex + 1) % 3;
+        UpdateTextColors();
+    }
     else if (key.scancode == sf::Keyboard::Scan::Enter || key.scancode == sf::Keyboard::Scan::Space) {
-        if(selectedIndex == 0) return GameOverAction::Retry;
-        if(selectedIndex == 1) return GameOverAction::MainMenu;
+        if (selectedIndex == 0) return GameOverAction::Retry;
+        if (selectedIndex == 1) return GameOverAction::MainMenu;
         return GameOverAction::Quit;
     }
 
@@ -50,6 +60,7 @@ void GameOver::Draw(sf::RenderWindow &window) {
     }else {
         std::println("retrytext is empty");
     }
+    if (GameOverText) {window.draw(*GameOverText);}
     if (retryText){ window.draw(*retryText);}
     if (mainMenuText) {window.draw(*mainMenuText);}
     if (quitText) { window.draw(*quitText);}

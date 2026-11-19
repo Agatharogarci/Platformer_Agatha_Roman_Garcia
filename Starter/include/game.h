@@ -39,11 +39,11 @@ class Game {
     Enemy enemy;
     Health health;
 
-    // PhysicalObject groundPhysics;
+
     sf::Texture groundTexture;
     std::vector<std::unique_ptr<Platform>> platforms;
     void AddPlatform(sf::Vector2f screenPos, sf::Vector2f screenSize);
-    // sf::RectangleShape groundShape;
+
 
     b2WorldId world = b2_nullWorldId;
     float accumulator = 0.0f;

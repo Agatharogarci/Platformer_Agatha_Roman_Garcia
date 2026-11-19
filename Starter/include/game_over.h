@@ -18,6 +18,7 @@ enum class GameOverAction {
 };
 class GameOver {
     sf::Font font;
+    std::optional<sf::Text> GameOverText;
     std::optional<sf::Text> retryText;
     std::optional<sf::Text> mainMenuText;
     std::optional<sf::Text> quitText;

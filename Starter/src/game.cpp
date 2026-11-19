@@ -9,6 +9,7 @@
 #include "../include/constants.h"
 #include "../include/contact.h"
 #include "../include/health.h"
+#include "../include/settings.h"
 
 Game::~Game() {
     platforms.clear();
@@ -50,7 +51,7 @@ void Game::AddPlatform(sf::Vector2f screenPos, sf::Vector2f screenSize) {
 
 void Game::Initialize() {
     //Set the window and frame rate ---------------------------------------------------
-    window.create(sf::VideoMode({960, 775}), "Platformer");
+    window.create(sf::VideoMode(Platformer::WINDOW_SIZE), "Platformer");
     window.setFramerateLimit(144);
     camera = sf::View(sf::FloatRect({0.f, 0.f}, {960.f, 775.f}));
     healthV = sf::View(sf::FloatRect({0.f, 0.f}, {960.f, 775.f}));
@@ -63,7 +64,7 @@ void Game::Initialize() {
 
     // Initialisation Box2D
     b2WorldDef def = b2DefaultWorldDef();
-    def.gravity = {0.f, 40.f}; // Gravité vers le bas en m/s²
+    def.gravity = {0.f, Platformer::GRAVITY}; // Gravité vers le bas en m/s²
     world = b2CreateWorld(&def);
 
     player.SetupPhysics(world, {
@@ -91,8 +92,6 @@ void Game::Initialize() {
 
 
 void Game::Run() {
-    constexpr float scrollSpeed = 150.f;
-
 
     sf::Clock clock;
 
@@ -131,6 +130,7 @@ void Game::Run() {
                         RestartLevel();
                         state = GameState::Playing;
                     } else if (action == GameOverAction::MainMenu) {
+                        RestartLevel();
                         state = GameState::Menu;
                     } else if (action == GameOverAction::Quit) {
                         window.close();
@@ -154,10 +154,10 @@ void Game::Run() {
                 accumulator -= kTimeStep;
             }
 
-            // updates des persos
+            //Update-------------------------------------------------------------------------------------------------
             player.Update(dt);
             enemy.Update(dt);
-
+            //TakeDamage---------------------------------------------------------------------------------------------
             sf::Vector2f diff = player.GetScreenPosition() - enemy.GetScreenPosition();
             if (std::hypot(diff.x, diff.y) < 100.f) {
                 player.TakeDamage(3);
@@ -168,6 +168,7 @@ void Game::Run() {
             }
 
             if (player.GetCurrentHearts() <= 0) {
+                window.setView(window.getDefaultView());
                 state = GameState::GameOver;
             }
 
@@ -175,7 +176,7 @@ void Game::Run() {
                 player.TakeDamage(3);
             }
 
-            camera.move({scrollSpeed * dt, 0.f});
+            camera.move({Platformer::SCROLLSPEED * dt, 0.f});
         }
 
 

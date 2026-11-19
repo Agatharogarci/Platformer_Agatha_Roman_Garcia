@@ -9,6 +9,7 @@
 #include <box2d/box2d.h>
 
 #include "..\..\Starter\include\constants.h"
+#include "../../Starter/include/settings.h"
 
 
 Player::Player()
@@ -59,11 +60,9 @@ void Player::Jump() {
 }
 
 void Player::TakeDamage(int amount) {
-    if (isInvincible == true && amount < currentHearts) {}
+
     currentHearts -= amount;
-    isInvincible = true;
-    invincibilityTimer = 1.5f;
-    std::println("TakeDamage");
+
     if (currentHearts <= 0) {
         std::println("Dead");
         currentHearts = 0;
@@ -79,33 +78,25 @@ sf::Vector2f Player::GetScreenPosition() const {
 
 
 void Player::Update(float dt) {
-
-
-    if (isInvincible == true) {
-        invincibilityTimer -= dt;
-    }
-    if (invincibilityTimer <= 0.f) {
-        isInvincible = false;
-        invincibilityTimer = 0.f;
-    }
+    
     //Movement logic ----------------------------------------------------
 
     moving = false;
     float targetVx = 0.0f;
-    const float runSpeed = 12.0f;
+
 
 
 if (!sf::Joystick::isConnected(0)) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Left)) {
         moving = true;
-        targetVx = -runSpeed;
+        targetVx = -Platformer::RUNNINGSPEED;
         character->setScale({-1, 1});
     }
 
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Right)) {
         moving = true;
-        targetVx = runSpeed;
+        targetVx = Platformer::RUNNINGSPEED;
         character->setScale({1, 1});
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
@@ -117,7 +108,7 @@ if (!sf::Joystick::isConnected(0)) {
     const float x = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
     if (std::abs(x) > 20.f) {
         moving = true;
-        targetVx = (x / 100.f) * runSpeed;
+        targetVx = (x / 100.f) * Platformer::RUNNINGSPEED;
 
 
 
@@ -186,8 +177,7 @@ if (!sf::Joystick::isConnected(0)) {
 
 void Player::Reset(b2Vec2 startPos) {
     currentHearts = hearts;
-    isInvincible = false;
-    invincibilityTimer = 0.f;
+
 
 
     b2Body_SetTransform(physics.GetBodyId(), startPos, b2MakeRot(0.f));

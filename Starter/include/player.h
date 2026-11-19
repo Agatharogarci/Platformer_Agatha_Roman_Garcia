@@ -17,13 +17,12 @@ class Player {
     sf::Texture purple_walk_a;
     sf::Texture purple_walk_b;
 
-    // Character logic-----------------------------------------------------------------
+    // Character move-----------------------------------------------------------------
      bool moving = false;
-    int hearts = 3;
-    int currentHearts = 3;
-    float invincibilityDuration = 1.5f;
-    float invincibilityTimer = 0.f;
-    bool isInvincible = false;
+
+    //Health--------------------------------------------------------------------------
+    int hearts = 1;
+    int currentHearts = 1;
 
     //Character Animations-----------------------------------------------------------
     float animation_timer = 0.0f;
