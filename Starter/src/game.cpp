@@ -61,6 +61,7 @@ void Game::Initialize() {
     menu.Initialize();
     health.Initialize();
     gameOver.Initialize();
+    win.Initialize();
 
     // Initialisation Box2D
     b2WorldDef def = b2DefaultWorldDef();
@@ -145,6 +146,7 @@ void Game::Run() {
                         window.close();
                     }
                     else if (action == MenuActionWin::MainMenu) {
+                        RestartLevel();
                         state = GameState::Menu;
                     }
                 }
@@ -189,6 +191,12 @@ void Game::Run() {
                 player.TakeDamage(3);
             }
 
+            sf::Vector2f dif = player.GetScreenPosition() - winFlag.GetScreenPosition();
+
+            if (std::hypot(dif.x, dif.y) < 100.f) {
+                state = GameState::Win;
+            }
+
             camera.move({Platformer::SCROLLSPEED * dt, 0.f});
         }
 
@@ -202,6 +210,7 @@ void Game::Run() {
             gameOver.Draw(window);
         }
         if (state == GameState::Win) {
+            window.setView(window.getDefaultView());
             win.Draw(window);
         }
 

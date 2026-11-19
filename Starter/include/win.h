@@ -17,6 +17,7 @@ enum class MenuActionWin {
 
 class Win {
     sf::Font font;
+    std::optional<sf::Text> winText;
     std::optional<sf::Text> quitText;
     std::optional<sf::Text> mainMenuText;
 

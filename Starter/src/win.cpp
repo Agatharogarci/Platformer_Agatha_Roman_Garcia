@@ -11,11 +11,15 @@ bool Win::Initialize() {
         std::println("failed to load font");
         return false;
     }
-    quitText.emplace(font, "Quit", 75);
-    quitText->setPosition({275.f, 180.f});
+    winText.emplace(font, "Congratulations, you won", 75);
+    winText->setFillColor(sf::Color::Cyan);
+    winText->setPosition({ 50, 50 });
 
-    mainMenuText.emplace(font, "Main Menu", 50);
-    mainMenuText->setPosition({440.f, 360.f});
+    quitText.emplace(font, "Quit", 50);
+    quitText->setPosition({275.f, 380.f});
+
+    mainMenuText.emplace(font, "Main Menu", 60);
+    mainMenuText->setPosition({275.f, 280.f});
 
 
     return true;
@@ -46,8 +50,8 @@ void Win::Draw(sf::RenderWindow& window) {
     if (quitText) {
         window.draw(*quitText);
     }else {
-        std::println("titleText is empty");
+        std::println("titleText is empty win");
     }
-    if (quitText){ window.draw(*quitText);}
+    if (winText){window.draw(*winText);}
     if (mainMenuText) { window.draw(*mainMenuText);}
 }

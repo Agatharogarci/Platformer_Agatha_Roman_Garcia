@@ -13,6 +13,7 @@ flag_b("../../Starter/ressources/flag_yellow_b.png")
     win_flag.emplace(flag_a);
     if (win_flag) {
         win_flag->setOrigin({flag_a.getSize().x / 2.f, flag_a.getSize().y / 2.f});
+
     }
 
 }
@@ -33,6 +34,10 @@ void WinFlag::Update(float dt) {
     b2Vec2 physicPos = physics.GetPosition();
     float screenX = Conversions::PhysicsToScreen(physicPos.x);
 
+    if (win_flag.has_value()) {
+        win_flag->setPosition({Conversions::PhysicsToScreen(physicPos.x),
+            Conversions::PhysicsToScreen(physicPos.y)});
+    }
     animation_timer += dt;
 
     if (animation_timer >= 0.08) {
