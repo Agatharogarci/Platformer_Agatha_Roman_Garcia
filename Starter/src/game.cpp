@@ -71,7 +71,7 @@ void Game::Initialize() {
                             Conversions::ScreenToPhysics(200.f)
                         });
 
-    enemy.SetupPhysicsM(world, {
+    enemy.SetupPhysics(world, {
                             Conversions::ScreenToPhysics(1560.f),
                             Conversions::ScreenToPhysics(300.f)
                         });
@@ -91,7 +91,7 @@ void Game::Initialize() {
 
 
 void Game::Run() {
-    constexpr float scrollSpeed = 75.f;
+    constexpr float scrollSpeed = 150.f;
 
 
     sf::Clock clock;
@@ -156,9 +156,7 @@ void Game::Run() {
 
             // updates des persos
             player.Update(dt);
-            enemy.UpdateSaw(dt);
-
-            camera.move({scrollSpeed * dt, 0.f});
+            enemy.Update(dt);
 
             sf::Vector2f diff = player.GetScreenPosition() - enemy.GetScreenPosition();
             if (std::hypot(diff.x, diff.y) < 100.f) {
@@ -176,6 +174,8 @@ void Game::Run() {
             if (player.GetScreenPosition().y > 800.f) {
                 player.TakeDamage(3);
             }
+
+            camera.move({scrollSpeed * dt, 0.f});
         }
 
 

@@ -14,6 +14,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "health.h"
+#include "win.h"
 
 struct Platform {
     sf::RectangleShape shape;
@@ -23,7 +24,8 @@ struct Platform {
 enum class GameState {
     Menu,
     Playing,
-    GameOver
+    GameOver,
+    Win
 };
 class Game {
 
@@ -51,6 +53,7 @@ class Game {
     GameState state = GameState::Menu;
     Menu menu;
     GameOver gameOver;
+    Win win;
 
 
     public:

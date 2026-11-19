@@ -19,7 +19,7 @@ Enemy::Enemy() :
 }
 
 
-void Enemy::SetupPhysicsM(b2WorldId world, b2Vec2 startPos) {
+void Enemy::SetupPhysics(b2WorldId world, b2Vec2 startPos) {
     sf::Vector2u size = saw_a.getSize();
     b2Vec2 halfSize = {
         Conversions::ScreenToPhysics(size.x / 2.f),
@@ -32,7 +32,7 @@ void Enemy::SetupPhysicsM(b2WorldId world, b2Vec2 startPos) {
 
 }
 
-void Enemy::UpdateSaw(float dt) {
+void Enemy::Update(float dt) {
     //Movement logic
     b2Vec2 physicPos = physics.GetPosition();
     float screenX = Conversions::PhysicsToScreen(physicPos.x);

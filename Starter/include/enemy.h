@@ -24,9 +24,9 @@ class Enemy {
 
     Enemy();
     bool isTouchingPlayer() const {return hitSensor.HasTouched;}
-    void SetupPhysicsM(b2WorldId world, b2Vec2 startPos);
+    void SetupPhysics(b2WorldId world, b2Vec2 startPos);
     sf::Vector2f GetScreenPosition() const { return enemy->getPosition(); }
-    void UpdateSaw(float dt);
+    void Update(float dt);
     void Draw(sf::RenderWindow& window);
 };
 #endif //PLATFORMER_AGATHA_ROMAN_GARCIA_ENEMY_H
