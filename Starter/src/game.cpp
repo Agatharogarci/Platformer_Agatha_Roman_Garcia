@@ -20,6 +20,7 @@ Game::~Game() {
 void Game::RestartLevel() {
     player.Reset({Conversions::ScreenToPhysics(200.f),
                   Conversions::ScreenToPhysics(200.f)});
+    camera.setCenter({480.f, 387.5f});
 }
 
 void Game::AddPlatform(sf::Vector2f screenPos, sf::Vector2f screenSize) {
@@ -52,6 +53,7 @@ void Game::Initialize() {
     //Set the window and frame rate ---------------------------------------------------
     window.create(sf::VideoMode({960, 775}),"Platformer");
     window.setFramerateLimit(144);
+    camera = sf::View(sf::FloatRect({0.f, 0.f}, {960.f, 775.f}));
 
     //Set menu----------------------------------------------------
     menu.Initialize();
@@ -75,10 +77,11 @@ void Game::Initialize() {
 
     groundTexture.setRepeated(true);
 
+    //sol----------------------------
     AddPlatform({580.f, 675.f}, {960.f, 64.f});
-    AddPlatform({650.f, 580.f}, {200.f, 40.f});
-    AddPlatform({950.f, 460.f}, {200.f, 40.f});
-
+     AddPlatform({650.f, 580.f}, {200.f, 40.f});
+     AddPlatform({950.f, 460.f}, {200.f, 40.f});
+     AddPlatform({1550.f, 380.f}, {1000.f, 40.f});
 
 
 }
@@ -88,7 +91,7 @@ void Game::Initialize() {
 
 void Game::Run() {
 
-    sf::View camera(sf::FloatRect({0.f, 0.f}, {960.f, 775.f}));
+
     constexpr float scrollSpeed = 50.f;
 
 
@@ -125,7 +128,6 @@ void Game::Run() {
                     GameOverAction action = gameOver.HandleInput(*key);
                     if (action == GameOverAction::Retry) {
                         RestartLevel();
-                        camera.resetPosition();
                         state = GameState::Playing;
                     }else if (action == GameOverAction::MainMenu) {
                         state = GameState::Menu;
