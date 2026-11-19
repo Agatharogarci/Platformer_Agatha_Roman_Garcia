@@ -76,6 +76,9 @@ void Game::Initialize() {
                             Conversions::ScreenToPhysics(1560.f),
                             Conversions::ScreenToPhysics(300.f)
                         });
+    winFlag.SetupPhysics(world, {
+                            Conversions::ScreenToPhysics(1950.f),
+                            Conversions::ScreenToPhysics(300.f)});
 
     if (!groundTexture.loadFromFile("../../Starter/ressources/terrain_grass_block_top.png")) {
         std::println("erreur pas de sol pour toi");
@@ -136,6 +139,15 @@ void Game::Run() {
                         window.close();
                     }
                 }
+                if (state == GameState::Win) {
+                    MenuActionWin action = win.HandleInput(*key);
+                    if (action == MenuActionWin::Quit) {
+                        window.close();
+                    }
+                    else if (action == MenuActionWin::MainMenu) {
+                        state = GameState::Menu;
+                    }
+                }
             } else if (const auto *resize = event->getIf<sf::Event::Resized>()) {
                 sf::FloatRect visibleArea({0.f, 0.f}, sf::Vector2f(resize->size));
                 window.setView(sf::View(visibleArea));
@@ -157,6 +169,7 @@ void Game::Run() {
             //Update-------------------------------------------------------------------------------------------------
             player.Update(dt);
             enemy.Update(dt);
+            winFlag.Update(dt);
             //TakeDamage---------------------------------------------------------------------------------------------
             sf::Vector2f diff = player.GetScreenPosition() - enemy.GetScreenPosition();
             if (std::hypot(diff.x, diff.y) < 100.f) {
@@ -188,6 +201,9 @@ void Game::Run() {
         if (state == GameState::GameOver) {
             gameOver.Draw(window);
         }
+        if (state == GameState::Win) {
+            win.Draw(window);
+        }
 
         if (state == GameState::Menu) {
             menu.Draw(window);
@@ -197,6 +213,7 @@ void Game::Run() {
         else if (state == GameState::Playing) {
             for (const auto &plat: platforms) {
                 window.draw(plat->shape);
+                winFlag.Draw(window);
             }
 
             window.setView(sf::View(healthV));
@@ -204,6 +221,7 @@ void Game::Run() {
             window.setView(sf::View(camera));
             player.Draw(window);
             enemy.Draw(window);
+
 
         }
 

@@ -15,6 +15,7 @@
 #include "enemy.h"
 #include "health.h"
 #include "win.h"
+#include "win_flag.h"
 
 struct Platform {
     sf::RectangleShape shape;
@@ -54,6 +55,7 @@ class Game {
     Menu menu;
     GameOver gameOver;
     Win win;
+    WinFlag winFlag;
 
 
     public:

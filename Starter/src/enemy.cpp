@@ -2,7 +2,6 @@
 // Created by Agatha on 10.11.2026.
 //
 #include <print>
-#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "..\..\Starter\include\constants.h"
 #include "../include/enemy.h"
@@ -14,7 +13,6 @@ Enemy::Enemy() :
     enemy.emplace(saw_a);
     if (enemy) {
         enemy->setOrigin({saw_a.getSize().x / 2.f, saw_a.getSize().y / 2.f});
-        enemy->setPosition({400, 675});
     }
 }
 

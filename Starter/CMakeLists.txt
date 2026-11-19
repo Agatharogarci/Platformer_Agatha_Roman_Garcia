@@ -20,6 +20,8 @@ add_executable(Starter main.cpp
         include/win.h
         src/win.cpp
         include/settings.h
+        include/win_flag.h
+        src/win_flag.cpp
 )
 
 target_link_libraries(Starter PUBLIC SFML::Graphics SFML::Audio box2d::box2d)
