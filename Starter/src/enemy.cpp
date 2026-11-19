@@ -37,10 +37,10 @@ void Enemy::UpdateSaw(float dt) {
     b2Vec2 physicPos = physics.GetPosition();
     float screenX = Conversions::PhysicsToScreen(physicPos.x);
 
-    if (screenX >= 760.f) {
+    if (screenX >= 2000.f) {
         speed = -std::abs(speed);
     }
-    else if (screenX <= 200.f) {
+    else if (screenX <= 1000.f) {
         speed = std::abs(speed);
     }
     physics.SetVelocity({speed, 0.f});

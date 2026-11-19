@@ -29,6 +29,7 @@ class Game {
 
     sf::RenderWindow window;
     sf::View camera;
+    sf::View healthV;
     std::optional<sf::Sprite> sprite;
     sf::Texture texture;
 

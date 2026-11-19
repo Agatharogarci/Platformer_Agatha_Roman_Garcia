@@ -44,7 +44,7 @@ MenuAction Menu::HandleInput(const sf::Event::KeyPressed& key) {
 }
 
 
-void Menu::DrawMenu(sf::RenderWindow& window) {
+void Menu::Draw(sf::RenderWindow& window) {
     if (titleText) {
         window.draw(*titleText);
     }else {

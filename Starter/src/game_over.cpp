@@ -44,7 +44,7 @@ GameOverAction GameOver::HandleInput(const sf::Event::KeyPressed &key) {
     return GameOverAction::None;
 }
 
-void GameOver::DrawMenu(sf::RenderWindow &window) {
+void GameOver::Draw(sf::RenderWindow &window) {
     if (retryText) {
         window.draw(*retryText);
     }else {

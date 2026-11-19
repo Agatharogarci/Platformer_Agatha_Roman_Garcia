@@ -30,7 +30,7 @@ public:
     GameOver() = default;
     bool Initialize();
     GameOverAction HandleInput(const sf::Event::KeyPressed& key);
-    void DrawMenu(sf::RenderWindow& window);
+    void Draw(sf::RenderWindow& window);
 
 };
 #endif //PLATFORMER_AGATHA_ROMAN_GARCIA_GAME_OVER_H
