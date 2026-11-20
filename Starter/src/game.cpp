@@ -24,6 +24,7 @@ void Game::RestartLevel() {
         Conversions::ScreenToPhysics(200.f)
     });
     camera.setCenter({480.f, 387.5f});
+    levelTimer = 0.0f;
 }
 
 void Game::AddPlatform(sf::Vector2f screenPos, sf::Vector2f screenSize) {
@@ -55,6 +56,14 @@ void Game::Initialize() {
     window.setFramerateLimit(144);
     camera = sf::View(sf::FloatRect({0.f, 0.f}, {960.f, 775.f}));
     healthV = sf::View(sf::FloatRect({0.f, 0.f}, {960.f, 775.f}));
+
+    if (!font.openFromFile("../../Starter/ressources/BAUHS93.TTF")) {
+        std::println("erreur dans le game initialisation");
+    }
+        timerText.emplace(font, "0.00s", 35);
+        timerText->setFillColor(sf::Color::White);
+        timerText->setPosition({20.f, 5.f});
+
 
 
     //Set menu----------------------------------------------------
@@ -158,10 +167,14 @@ void Game::Run() {
 
         // ============================================================================================================================
 
-        // camera.move({scrollSpeed * dt, 0.f});
+
 
         if (state == GameState::Playing) {
             accumulator += dt;
+            levelTimer += dt;
+            if (timerText) {
+                timerText->setString(std::format("{:.2f}", levelTimer));
+            }
             while (accumulator >= kTimeStep) {
                 b2World_Step(world, kTimeStep, kSubSteps);
                 SensorContact(world);
@@ -197,7 +210,7 @@ void Game::Run() {
                 state = GameState::Win;
             }
 
-            // camera.move({Platformer::SCROLLSPEED * dt, 0.f});
+            camera.move({Platformer::SCROLLSPEED * dt, 0.f});
         }
 
 
@@ -226,7 +239,10 @@ void Game::Run() {
             }
 
             window.setView(sf::View(healthV));
-            health.DrawHealth(window);
+            // health.DrawHealth(window);
+            if (timerText) {
+                window.draw(*timerText);
+            }
             window.setView(sf::View(camera));
             player.Draw(window);
             enemy.Draw(window);

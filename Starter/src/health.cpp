@@ -20,9 +20,6 @@ void Health::Initialize() {
     if (!font_h.openFromFile("../../Starter/ressources/BAUHS93.TTF")) {
         std::println("Erreur pas de points de vie!");
     }
-    // life.emplace(font_h, "3", 35);
-    // life->setFillColor(sf::Color::White);
-    // life->setPosition({50.f, 5.f});
 
     if (health) {
         health->setOrigin({heart.getSize().x / 2.f, heart.getSize().y / 2.f});

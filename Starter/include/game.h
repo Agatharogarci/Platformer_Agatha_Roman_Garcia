@@ -6,6 +6,7 @@
 #define PLATFORMER_AGATHA_ROMAN_GARCIA_GAME_H
 #include <box2d/box2d.h>
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Font.hpp>
 #include <optional>
 #include <vector>
 
@@ -56,6 +57,10 @@ class Game {
     GameOver gameOver;
     Win win;
     WinFlag winFlag;
+
+    float levelTimer = 0.0f;
+    sf::Font font;
+    std::optional<sf::Text> timerText;
 
 
     public:
