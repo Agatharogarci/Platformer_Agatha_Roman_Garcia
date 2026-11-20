@@ -51,12 +51,13 @@ void Player::SetupPhysics(b2WorldId world, b2Vec2 startPos) {
 }
 
 void Player::Jump() {
-    if (grounded.HasTouched) {
+    if (!grounded.HasTouched){std::println("Coyote time reussi");}
+    else{std::println("pas de coyote pour vous");}
 
         std::println("Jump");
         float xVelocity = physics.GetVelocity().x;
         physics.SetVelocity({xVelocity, Y_VELOCITY });
-    }
+        coyote_ = 0.f;
 }
 
 void Player::TakeDamage(int amount) {
@@ -84,6 +85,14 @@ void Player::Update(float dt) {
     moving = false;
     float targetVx = 0.0f;
 
+    //CoyoteTime--------------------------------------------------------
+
+    if (grounded.HasTouched){ coyote_ = kcoyote_; }
+    else{ coyote_ -= dt; }
+    if (coyote_ > 0.f && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)){
+        Jump();
+    }
+
 
 
 if (!sf::Joystick::isConnected(0)) {
@@ -99,7 +108,7 @@ if (!sf::Joystick::isConnected(0)) {
         targetVx = Platformer::RUNNINGSPEED;
         character->setScale({1, 1});
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+    if (grounded.HasTouched && coyote_ > 0.f && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
         Jump();
     }
 }
@@ -118,7 +127,7 @@ if (!sf::Joystick::isConnected(0)) {
             character->setScale({1, 1});
         }
     }
-    if (sf::Joystick::isButtonPressed(0,1)) {
+    if ( grounded.HasTouched && coyote_ > 0.f && sf::Joystick::isButtonPressed(0,1)) {
         Jump();
     }
 

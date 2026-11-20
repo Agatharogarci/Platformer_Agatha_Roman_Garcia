@@ -179,7 +179,7 @@ void Game::Run() {
             }
 
             if (player.GetScreenPosition().y > 800.f) {
-                player.TakeDamage(3);
+                player.TakeDamage(1);
             }
 
             if (player.GetCurrentHearts() <= 0) {
@@ -188,7 +188,7 @@ void Game::Run() {
             }
 
             if (player.GetScreenPosition().y > 800.f) {
-                player.TakeDamage(3);
+                player.TakeDamage(1);
             }
 
             sf::Vector2f dif = player.GetScreenPosition() - winFlag.GetScreenPosition();
@@ -197,7 +197,7 @@ void Game::Run() {
                 state = GameState::Win;
             }
 
-            camera.move({Platformer::SCROLLSPEED * dt, 0.f});
+            // camera.move({Platformer::SCROLLSPEED * dt, 0.f});
         }
 
 
