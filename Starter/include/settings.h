@@ -11,9 +11,9 @@ namespace Platformer {
     inline constexpr float GRAVITY = 40.f;
 
     inline constexpr float JUMP_VELOCITY = -25.f;
-    inline constexpr float RUNNINGSPEED = 12.f;
+    inline constexpr float RUNNINGSPEED = 20.f;
 
-    inline constexpr float SCROLLSPEED = 150.f;
+    inline constexpr float SCROLLSPEED = 220.f;
 
     inline constexpr sf::Vector2u WINDOW_SIZE = {960, 775};
 }

@@ -30,18 +30,32 @@ void Enemy::SetupPhysics(b2WorldId world, b2Vec2 startPos) {
 
 }
 
-void Enemy::Update(float dt) {
+void Enemy::Update(float dt, float cameraCenterX) {
     //Movement logic
     b2Vec2 physicPos = physics.GetPosition();
     float screenX = Conversions::PhysicsToScreen(physicPos.x);
+    float screenY = Conversions::PhysicsToScreen(physicPos.y);
 
-    if (screenX >= 2000.f) {
+    float leftEdge  = cameraCenterX - 440.f;
+    float rightEdge = cameraCenterX + 440.f;
+
+
+    if (screenX >= rightEdge) {
         speed = -std::abs(speed);
     }
-    else if (screenX <= 1000.f) {
+    else if (screenX <= leftEdge) {
         speed = std::abs(speed);
     }
-    physics.SetVelocity({speed, 0.f});
+
+    
+    if (screenY >= 680.f) {
+        speedY = -std::abs(speedY);
+    }
+    else if (screenY <= 150.f) {
+        speedY = std::abs(speedY);
+    }
+
+    physics.SetVelocity({speed, speedY});
 
     //Sync animation and Box2d
     if (enemy.has_value()) {

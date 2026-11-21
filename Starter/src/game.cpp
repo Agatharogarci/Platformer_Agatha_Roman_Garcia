@@ -83,12 +83,12 @@ void Game::Initialize() {
                         });
 
     enemy.SetupPhysics(world, {
-                            Conversions::ScreenToPhysics(1560.f),
-                            Conversions::ScreenToPhysics(300.f)
+                            Conversions::ScreenToPhysics(800.f),
+                            Conversions::ScreenToPhysics(520.f)
                         });
     winFlag.SetupPhysics(world, {
-                            Conversions::ScreenToPhysics(1950.f),
-                            Conversions::ScreenToPhysics(300.f)});
+                            Conversions::ScreenToPhysics(5060.f),
+                            Conversions::ScreenToPhysics(400.f)});
 
     if (!groundTexture.loadFromFile("../../Starter/ressources/terrain_grass_block_top.png")) {
         std::println("erreur pas de sol pour toi");
@@ -97,10 +97,36 @@ void Game::Initialize() {
     groundTexture.setRepeated(true);
 
     //sol----------------------------
-    AddPlatform({580.f, 735.f}, {960.f, 64.f});
-    AddPlatform({650.f, 595.f}, {200.f, 40.f});
-    AddPlatform({950.f, 480.f}, {200.f, 40.f});
-    AddPlatform({1550.f, 380.f}, {1000.f, 40.f});
+
+    AddPlatform({350.f, 720.f}, {700.f, 64.f});
+
+    AddPlatform({910.f, 700.f}, {220.f, 40.f});
+
+    AddPlatform({1290.f, 620.f}, {320.f, 40.f});
+
+    AddPlatform({1840.f, 640.f}, {360.f, 40.f});
+
+    AddPlatform({2220.f, 510.f}, {160.f, 40.f});
+
+    AddPlatform({2560.f, 450.f}, {180.f, 40.f});
+
+    AddPlatform({2830.f, 440.f}, {170.f, 40.f});
+
+    AddPlatform({3080.f, 360.f}, {160.f, 40.f});
+
+    AddPlatform({3320.f, 270.f}, {160.f, 40.f});
+
+    AddPlatform({3560.f, 380.f}, {170.f, 40.f});
+
+    AddPlatform({3790.f, 300.f}, {180.f, 40.f});
+
+    AddPlatform({4120.f, 300.f}, {280.f, 40.f});
+
+    AddPlatform({4460.f, 260.f}, {170.f, 40.f});
+
+    AddPlatform({4760.f, 510.f}, {170.f, 40.f});
+
+    AddPlatform({5040.f, 480.f}, {220.f, 40.f});
 }
 
 
@@ -183,11 +209,11 @@ void Game::Run() {
 
             //Update-------------------------------------------------------------------------------------------------
             player.Update(dt);
-            enemy.Update(dt);
+            enemy.Update(dt, camera.getCenter().x);
             winFlag.Update(dt);
             //TakeDamage---------------------------------------------------------------------------------------------
             sf::Vector2f diff = player.GetScreenPosition() - enemy.GetScreenPosition();
-            if (std::hypot(diff.x, diff.y) < 100.f) {
+            if (std::hypot(diff.x, diff.y) < 75.f) {
                 player.TakeDamage(3);
             }
 
