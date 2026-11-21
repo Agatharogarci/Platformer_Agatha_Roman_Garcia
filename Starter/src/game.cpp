@@ -31,7 +31,7 @@ void Game::RestartLevel(bool fullReset ) {
         Conversions::ScreenToPhysics(currentSpawnScreenPos.y)
     });
 
-    float camX = checkpointActivated ? currentSpawnScreenPos.x + 200.f : 400.f;
+    float camX = checkpointActivated ? currentSpawnScreenPos.x + 50.f : 400.f;
     camera.setCenter({camX, 387.5f});
 
     if (!checkpointActivated) {
@@ -106,7 +106,7 @@ void Game::Initialize() {
     // Checkpoint setup-----------------------------------------------------------------
     checkpointShape.setSize({30.f, 60.f});
     checkpointShape.setOrigin({15.f, 30.f});
-    checkpointShape.setFillColor(sf::Color::Red); // Rojo = aún no activado
+    checkpointShape.setFillColor(sf::Color::Red);
     checkpointShape.setPosition(checkpointScreenPos);
 
     if (!groundTexture.loadFromFile("../../Starter/ressources/terrain_grass_block_top.png")) {
