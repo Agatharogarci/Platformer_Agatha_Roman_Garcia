@@ -18,13 +18,25 @@ Game::~Game() {
     }
 }
 
-void Game::RestartLevel() {
+void Game::RestartLevel(bool fullReset ) {
+    if (fullReset) {
+        checkpointActivated = false;
+        currentSpawnScreenPos = {200.f, 425.f};
+        checkpointShape.setFillColor(sf::Color::Red);
+        levelTimer = 0.0f;
+    }
+
     player.Reset({
-        Conversions::ScreenToPhysics(200.f),
-        Conversions::ScreenToPhysics(425.f)
+        Conversions::ScreenToPhysics(currentSpawnScreenPos.x),
+        Conversions::ScreenToPhysics(currentSpawnScreenPos.y)
     });
-    camera.setCenter({400.f, 387.5f});
-    levelTimer = 0.0f;
+
+    float camX = checkpointActivated ? currentSpawnScreenPos.x + 200.f : 400.f;
+    camera.setCenter({camX, 387.5f});
+
+    if (!checkpointActivated) {
+        levelTimer = 0.0f;
+    }
 }
 
 void Game::AddPlatform(sf::Vector2f screenPos, sf::Vector2f screenSize) {
@@ -90,6 +102,12 @@ void Game::Initialize() {
     winFlag.SetupPhysics(world, {
                             Conversions::ScreenToPhysics(5060.f),
                             Conversions::ScreenToPhysics(400.f)});
+
+    // Checkpoint setup-----------------------------------------------------------------
+    checkpointShape.setSize({30.f, 60.f});
+    checkpointShape.setOrigin({15.f, 30.f});
+    checkpointShape.setFillColor(sf::Color::Red); // Rojo = aún no activado
+    checkpointShape.setPosition(checkpointScreenPos);
 
     if (!groundTexture.loadFromFile("../../Starter/ressources/terrain_grass_block_top.png")) {
         std::println("erreur pas de sol pour toi");
@@ -170,7 +188,7 @@ void Game::Run() {
                         RestartLevel();
                         state = GameState::Playing;
                     } else if (action == GameOverAction::MainMenu) {
-                        RestartLevel();
+                        RestartLevel(true);
                         state = GameState::Menu;
                     } else if (action == GameOverAction::Quit) {
                         window.close();
@@ -182,7 +200,7 @@ void Game::Run() {
                         window.close();
                     }
                     else if (action == MenuActionWin::MainMenu) {
-                        RestartLevel();
+                        RestartLevel(true);
                         state = GameState::Menu;
                     }
                 }
@@ -241,6 +259,13 @@ void Game::Run() {
                 state = GameState::Win;
             }
 
+            sf::Vector2f diffCheck = player.GetScreenPosition() - checkpointScreenPos;
+            if (!checkpointActivated && std::hypot(diffCheck.x, diffCheck.y) < 80.f) {
+                checkpointActivated = true;
+                currentSpawnScreenPos = checkpointScreenPos;
+                checkpointShape.setFillColor(sf::Color::Green);
+            }
+
             camera.move({Platformer::SCROLLSPEED * dt, 0.f});
         }
 
@@ -268,6 +293,7 @@ void Game::Run() {
                 window.draw(plat->shape);
                 winFlag.Draw(window);
             }
+            window.draw(checkpointShape);
 
             window.setView(sf::View(healthV));
             // health.DrawHealth(window);

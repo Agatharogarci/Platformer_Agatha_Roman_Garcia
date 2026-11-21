@@ -16,6 +16,7 @@ namespace Platformer {
     inline constexpr float SCROLLSPEED = 300.f;
 
     inline constexpr sf::Vector2u WINDOW_SIZE = {960, 775};
+    inline constexpr sf::Vector2f CHECK_POINT_POS = {960, 775};
 }
 
 

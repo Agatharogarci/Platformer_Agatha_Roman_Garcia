@@ -58,6 +58,12 @@ class Game {
     Win win;
     WinFlag winFlag;
 
+    // Checkpoint -------------------------------------------------
+    sf::RectangleShape checkpointShape;
+    sf::Vector2f checkpointScreenPos = {2560.f, 390.f};
+    sf::Vector2f currentSpawnScreenPos = {200.f, 425.f};
+    bool checkpointActivated = false;
+
     float levelTimer = 0.0f;
     sf::Font font;
     std::optional<sf::Text> timerText;
@@ -66,7 +72,7 @@ class Game {
     public:
     Game() = default;
     ~Game();
-    void RestartLevel();
+    void RestartLevel(bool fullReset = false);
     void Initialize();
     void Run();
 
