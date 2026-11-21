@@ -21,3 +21,10 @@ To make the run a bit more forgiving, there is a **checkpoint** halfway through 
 
 ## Easy Customization
 Includes a `settings.h` header file where you can easily tweak parameters like jump force, gravity, scroll speed, window size, and movement speed.
+
+## Installation & Build
+```bash
+git clone (https://github.com/Agatharogarci/Platformer_Agatha_Roman_Garcia.git)
+cd Platformer_Agatha_Roman_Garcia
+cmake -B build -S .
+cmake --build build --config Release
