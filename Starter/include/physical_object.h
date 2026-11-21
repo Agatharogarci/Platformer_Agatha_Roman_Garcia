@@ -16,7 +16,6 @@ public:
     PhysicalObject() = default;
     ~PhysicalObject();
 
-    // Empêche la copie accidentelle (qui casserait la gestion de b2BodyId)
     PhysicalObject(const PhysicalObject&) = delete;
     PhysicalObject& operator=(const PhysicalObject&) = delete;
 

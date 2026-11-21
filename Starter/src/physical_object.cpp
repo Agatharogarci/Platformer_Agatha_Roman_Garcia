@@ -32,7 +32,9 @@ void PhysicalObject::Setup(b2WorldId world, b2BodyType type, b2Vec2 position, b2
     shape_def.material.restitution = 0.0f;
     shape_def.enableSensorEvents = true;
 
+
     b2CreatePolygonShape(body_, &shape_def, &square);
+
 }
 
 void PhysicalObject::SetupCircle(b2WorldId world, b2BodyType type, b2Vec2 position, b2Vec2 halfSize,

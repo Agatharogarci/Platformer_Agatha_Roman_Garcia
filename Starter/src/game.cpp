@@ -21,9 +21,9 @@ Game::~Game() {
 void Game::RestartLevel() {
     player.Reset({
         Conversions::ScreenToPhysics(200.f),
-        Conversions::ScreenToPhysics(200.f)
+        Conversions::ScreenToPhysics(425.f)
     });
-    camera.setCenter({480.f, 387.5f});
+    camera.setCenter({400.f, 387.5f});
     levelTimer = 0.0f;
 }
 
@@ -55,6 +55,7 @@ void Game::Initialize() {
     window.create(sf::VideoMode(Platformer::WINDOW_SIZE), "Platformer");
     window.setFramerateLimit(144);
     camera = sf::View(sf::FloatRect({0.f, 0.f}, {960.f, 775.f}));
+    camera.setCenter({400.f, 387.5f});
     healthV = sf::View(sf::FloatRect({0.f, 0.f}, {960.f, 775.f}));
 
     if (!font.openFromFile("../../Starter/ressources/BAUHS93.TTF")) {
@@ -79,7 +80,7 @@ void Game::Initialize() {
 
     player.SetupPhysics(world, {
                             Conversions::ScreenToPhysics(200.f),
-                            Conversions::ScreenToPhysics(200.f)
+                            Conversions::ScreenToPhysics(425.f)
                         });
 
     enemy.SetupPhysics(world, {
@@ -104,9 +105,9 @@ void Game::Initialize() {
 
     AddPlatform({1290.f, 620.f}, {320.f, 40.f});
 
-    AddPlatform({1840.f, 640.f}, {360.f, 40.f});
+    AddPlatform({1840.f, 600.f}, {360.f, 40.f});
 
-    AddPlatform({2220.f, 510.f}, {160.f, 40.f});
+    AddPlatform({2220.f, 525.f}, {160.f, 40.f});
 
     AddPlatform({2560.f, 450.f}, {180.f, 40.f});
 
@@ -196,6 +197,10 @@ void Game::Run() {
 
 
         if (state == GameState::Playing) {
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) {
+                RestartLevel();
+            }
             accumulator += dt;
             levelTimer += dt;
             if (timerText) {
@@ -213,7 +218,7 @@ void Game::Run() {
             winFlag.Update(dt);
             //TakeDamage---------------------------------------------------------------------------------------------
             sf::Vector2f diff = player.GetScreenPosition() - enemy.GetScreenPosition();
-            if (std::hypot(diff.x, diff.y) < 75.f) {
+            if (std::hypot(diff.x, diff.y) < 95.f) {
                 player.TakeDamage(3);
             }
 
@@ -241,7 +246,7 @@ void Game::Run() {
 
 
         // ========================================================================================================================================
-        // enemy.UpdateSaw(dt);
+
         window.clear(sf::Color::Black);
 
 

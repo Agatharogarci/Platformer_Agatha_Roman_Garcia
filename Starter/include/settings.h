@@ -8,12 +8,12 @@
 #include <SFML/System/Vector2.hpp>
 
 namespace Platformer {
-    inline constexpr float GRAVITY = 40.f;
+    inline constexpr float GRAVITY = 50.f;
 
-    inline constexpr float JUMP_VELOCITY = -25.f;
-    inline constexpr float RUNNINGSPEED = 20.f;
+    inline constexpr float JUMP_VELOCITY = -30.f;
+    inline constexpr float RUNNINGSPEED = 25.f;
 
-    inline constexpr float SCROLLSPEED = 220.f;
+    inline constexpr float SCROLLSPEED = 300.f;
 
     inline constexpr sf::Vector2u WINDOW_SIZE = {960, 775};
 }
